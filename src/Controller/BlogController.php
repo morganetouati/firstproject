@@ -66,7 +66,10 @@ class BlogController extends AbstractController
     {
         $blogPost = $this->blogPostRepository->findOneBySlug($slug);
 
-        if ()
+        if (!$blogPost){
+            $this->addFlash('error', 'unable to find entry');
+            return $this->redirectToRoute('entries');
+        }
         return $this->render('blog/entry.html.twig', array(
             'blogPost' => $blogPost
         ));

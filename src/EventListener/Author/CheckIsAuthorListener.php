@@ -8,7 +8,9 @@
 
 namespace App\EventListener\Author;
 
-use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Author;
+use Doctrine\Common\Persistence\ObjectRepository;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -33,33 +35,20 @@ class CheckIsAuthorListener
     private $tokenStorage;
 
     /**
-     * @var EntityManagerInterface
+     * @var ObjectRepository
      */
-    private $entityManager;
+    private $authorRepository;
 
-
-    /**
-     * CheckIsAuthorListener constructor.
-     * @param RouterInterface $router
-     * @param SessionInterface $session
-     * @param TokenStorageInterface $tokenStorage
-     * @param EntityManagerInterface $entityManager
-     */
     public function __construct(RouterInterface $router, SessionInterface $session,
-                                TokenStorageInterface $tokenStorage, EntityManagerInterface $entityManager)
+                                TokenStorageInterface $tokenStorage,
+                                RegistryInterface $registry)
     {
         $this->router = $router;
         $this->session = $session;
         $this->tokenStorage = $tokenStorage;
-        $this->entityManager = $entityManager;
+        $this->authorRepository = $registry->getEntityManagerForClass(Author::class)->getRepository(Author::class);
     }
 
-
-    /**
-     * On Kernel.controller
-     * @param FilterControllerEvent $event
-     * @return void
-     */
     public function onKernelController(FilterControllerEvent $event)
     {
         if (!preg_match('/^\/admin/i', $event->getRequest()->getPathInfo())){
@@ -78,8 +67,7 @@ class CheckIsAuthorListener
             return;
         }
 
-        if ($author = $this->entityManager->getRepository('App:Author')
-            ->findOneByUsername($user->getUsername())){
+        if ($author = $this->authorRepository->findOneByUsername($user->getUsername())){
             $this->session->set('user_is_author', true);
         }
         if (!$author && $this->session->get('pending_user_is_author')){
