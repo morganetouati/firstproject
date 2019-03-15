@@ -26,9 +26,8 @@ class BlogPostRepository extends ServiceEntityRepository
      */
     public function getAllPosts($page = 1, $limit = 5)
     {
-        return $this->createQueryBuilder()
+        return $this->createQueryBuilder('bp')
             ->select('bp')
-            ->from('App:BlogPost', 'bp')
             ->orderBy('bp.id', 'DESC')
             ->setFirstResult($limit *(--$page))
             ->setMaxResults($limit)
@@ -36,12 +35,13 @@ class BlogPostRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-
+    /**
+     * @return array
+     */
     public function getPostCount()
     {
-        return $this->createQueryBuilder()
+        return $this->createQueryBuilder('bp')
             ->select('count(bp)')
-            ->from('App:BlogPost', 'bp')
             ->getQuery()
             ->getSingleScalarResult();
     }

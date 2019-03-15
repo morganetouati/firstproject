@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: morgane
- * Date: 13/03/19
- * Time: 15:56
- */
 
 namespace App\EventListener\Author;
 

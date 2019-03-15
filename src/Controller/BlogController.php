@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Controller;
-
 use App\Entity\Author;
 use App\Entity\BlogPost;
 use Doctrine\Common\Persistence\ObjectRepository;
@@ -12,9 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class BlogController extends AbstractController
 {
-    /**
-     * @var integer
-     */
+    /** @var integer */
     const POST_LIMIT = 5;
 
     /**
@@ -32,8 +28,6 @@ class BlogController extends AbstractController
         $this->blogPostRepository = $registry->getEntityManagerForClass(BlogPost::class)->getRepository(BlogPost::class);
         $this->authorRepository = $registry->getEntityManagerForClass(Author::class)->getRepository(Author::class);
     }
-
-
     /**
      * @Route("/", name="homepage")
      * @Route("/entries", name="entries")
@@ -41,15 +35,9 @@ class BlogController extends AbstractController
     public function entriesAction(Request $request)
     {
         $page = 1;
-        if ($request->get('page')){
+        if ($request->get('page')) {
             $page = $request->get('page');
         }
-        $author = $this->authorRepository->findOneByUsername($this->getUser()->getUserName());
-        $blogPosts = [];
-        if ($author){
-            $blogPosts = $this->blogPostRepository->finddByAuthor($author);
-        }
-
         return $this->render('blog/entries.html.twig', [
             'blogPosts' => $this->blogPostRepository->getAllPosts($page, self::POST_LIMIT),
             'totalBlogPosts' => $this->blogPostRepository->getPostCount(),
@@ -57,22 +45,32 @@ class BlogController extends AbstractController
             'entryLimit' => self::POST_LIMIT
         ]);
     }
-
-
     /**
      * @Route("/entry/{slug}", name="entry")
      */
     public function entryAction($slug)
     {
         $blogPost = $this->blogPostRepository->findOneBySlug($slug);
-
-        if (!$blogPost){
-            $this->addFlash('error', 'unable to find entry');
+        if (!$blogPost) {
+            $this->addFlash('error', 'Unable to find entry!');
             return $this->redirectToRoute('entries');
         }
         return $this->render('blog/entry.html.twig', array(
             'blogPost' => $blogPost
         ));
     }
-
+    /**
+     * @Route("/author/{name}", name="author")
+     */
+    public function authorAction($name)
+    {
+        $author = $this->authorRepository->findOneByUsername($name);
+        if (!$author) {
+            $this->addFlash('error', 'Unable to find author!');
+            return $this->redirectToRoute('entries');
+        }
+        return $this->render('blog/author.html.twig', [
+            'author' => $author
+        ]);
+    }
 }

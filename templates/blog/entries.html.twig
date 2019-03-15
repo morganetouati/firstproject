@@ -15,18 +15,23 @@
                     {% set firstParagraph = paragraphs|first ~ '</p>' %}
                     <div class="blog-post">
                         <h2 class="blog-post-title">
-                            {{ blogPost.title }}
+                            <a href="{{ path('entry', {'slug': blogPost.slug}) }}">
+                                {{ blogPost.title }}
+                            </a>
                         </h2>
                         <p class="blog-post-meta">
                             {{ blogPost.getUpdatedAt|date('F j, Y') }} by
 
                             {% if blogPost.author %}
-                                {{ blogPost.author.name }}
+                                <a href="{{ path('author', {'name': blogPost.author.username|url_encode }) }}">
+                                    {{ blogPost.author.name }}
+                                </a>
                             {% else %}
                                 Unknown Author
                             {% endif %}
                         </p>
                         {{ firstParagraph|raw }}<br/>
+                        <a href="{{ path('entry', {'slug': blogPost.slug}) }}">Read More</a>
                     </div>
                 {% else %}
                     <div class="alert alert-danger" role="alert">
