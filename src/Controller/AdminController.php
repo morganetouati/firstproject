@@ -32,7 +32,7 @@ class AdminController extends AbstractController
     /**
      * @Route("/author/create", name="author_create")
      */
-    public function createAuthorAction(Request $request)
+    public function createAuthorAction(Request $request, RegistryInterface $registry)
     {
         if ($this->authorRepository->findOneByUsername($this->getUser()->getUserName())) {
             // Redirect to dashboard.
@@ -44,8 +44,9 @@ class AdminController extends AbstractController
         $form = $this->createForm(AuthorFormType::class, $author);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->persist($author);
-            $this->entityManager->flush($author);
+            $em = $registry->getEntityManagerForClass(Author::class);
+            $em->persist($author);
+            $em->flush($author);
             $request->getSession()->set('user_is_author', true);
             $this->addFlash('success', 'Congratulations! You are now an author.');
             return $this->redirectToRoute('homepage');
@@ -60,7 +61,7 @@ class AdminController extends AbstractController
      * @param Request $request
      *
      */
-    public function createEntryAction(Request $request)
+    public function createEntryAction(Request $request, RegistryInterface $registry)
     {
         $blogPost = new BlogPost();
         $author = $this->authorRepository->findOneByUsername($this->getUser()->getUserName());
@@ -69,8 +70,9 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
         // Check is valid
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->persist($blogPost);
-            $this->entityManager->flush($blogPost);
+            $em = $registry->getEntityManagerForClass(BlogPost::class);
+            $em->persist($blogPost);
+            $em->flush();
             $this->addFlash('success', 'Congratulations! Your post is created');
             return $this->redirectToRoute('admin_entries');
         }
@@ -100,7 +102,7 @@ class AdminController extends AbstractController
      *
      * @return \Response
      */
-    public function deleteEntryAction($entryId)
+    public function deleteEntryAction($entryId, RegistryInterface $registry)
     {
         $blogPost = $this->blogPostRepository->findOneById($entryId);
         $author = $this->authorRepository->findOneByUsername($this->getUser()->getUserName());
@@ -108,8 +110,9 @@ class AdminController extends AbstractController
             $this->addFlash('error', 'Unable to remove entry!');
             return $this->redirectToRoute('admin_entries');
         }
-        $this->entityManager->remove($blogPost);
-        $this->entityManager->flush();
+        $em = $registry->getEntityManagerForClass(BlogPost::class);
+        $em->remove($blogPost);
+        $em->flush();
         $this->addFlash('success', 'Entry was deleted!');
         return $this->redirectToRoute('admin_entries');
     }

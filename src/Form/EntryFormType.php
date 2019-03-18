@@ -1,18 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: morgane
- * Date: 14/03/19
- * Time: 15:04
- */
 
 namespace App\Form;
 
-
-use Doctrine\DBAL\Types\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;

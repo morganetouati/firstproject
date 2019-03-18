@@ -26,7 +26,7 @@ class BlogController extends AbstractController
     public function __construct(RegistryInterface $registry)
     {
         $this->blogPostRepository = $registry->getEntityManagerForClass(BlogPost::class)->getRepository(BlogPost::class);
-        $this->authorRepository = $registry->getEntityManagerForClass(Author::class)->getRepository(Author::class);
+        $this->authorRepository = $registry->getEntityManagerForClass(Author::class)->getRepository(Author::class); // getManagerForClass
     }
     /**
      * @Route("/", name="homepage")
