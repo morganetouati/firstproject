@@ -20,6 +20,7 @@
 
                 {{ form_start(form) }}
                 <div class="col-md-12">
+                    <h2>Add a new article</h2>
                     <div class="form-group col-md-4">
                         {{ form_row(form.title) }}
                     </div>
@@ -31,6 +32,9 @@
                     </div>
                     <div class="form-group col-md-12">
                         {{ form_row(form.body) }}
+                    </div>
+                    <div class="form-group col-md-12">
+                        {{ form_row(form.imgUploaded) }}
                     </div>
                     <div class="form-group col-md-4 pull-right">
                         {{ form_widget(form.create) }}

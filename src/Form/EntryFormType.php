@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -38,6 +39,11 @@ class EntryFormType extends AbstractType
                     'attr' => ['class' => 'form-control']
                 ]
             )
+            ->add('imgUploaded', FileType::class,
+                ['label' => 'Image(jpg, jpeg, png allowed',
+                    'attr' => ['class' => 'form-control']
+                ]
+            )
             ->add('create', SubmitType::class,
                 ['label' => 'Create',
                     'attr' => ['class' => 'form-control btn-primary pull-right']
@@ -60,7 +66,8 @@ class EntryFormType extends AbstractType
      * {@inheritdoc}
      */
 
-    public function getName(){
+    public function getName()
+    {
         return 'author_form';
     }
 

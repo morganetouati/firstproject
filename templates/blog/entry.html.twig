@@ -24,6 +24,7 @@
 
                     <h3>Body:</h3>
                     <p>{{ blogPost.body|raw }}</p>
+                    <img src="{{  asset('uploads/img/' ~ blogPost.imgUploaded) }}" alt="{{ blogPost.imgUploaded }}">
                 </div>
             </div>
         </div>

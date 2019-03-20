@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * BlogPost
@@ -72,6 +74,11 @@ class BlogPost
      */
     private $updatedAt;
 
+    /**
+     * @Assert\File(mimeTypes={"image/jpeg", "image/png"})
+     * @ORM\Column(name="imgUploaded", type="string")
+     */
+    private $imgUploaded;
 
     /**
      * Get id
@@ -249,6 +256,20 @@ class BlogPost
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    public function getImgUploaded()
+    {
+        return $this->imgUploaded;
+    }
+
+    /**
+     * @param string|File $imgUploaded
+     */
+    public function setImgUploaded($imgUploaded)
+    {
+        $this->imgUploaded = $imgUploaded;
+        return $this;
     }
 
     /**

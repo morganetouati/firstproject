@@ -1,22 +1,27 @@
 <?php
+
 namespace App\Controller;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+use App\Entity\Author;
+use App\Entity\BlogPost;
+use App\Form\AuthorFormType;
+use App\Form\EntryFormType;
+use App\Service\ImgUploader;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
-use App\Entity\Author;
-use App\Form\AuthorFormType;
-use App\Entity\BlogPost;
-use App\Form\EntryFormType;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/admin")
  */
 class AdminController extends AbstractController
-{/**
- * @var ObjectRepository
- */
+{
+    /**
+     * @var ObjectRepository
+     */
     private $authorRepository;
 
     /**
@@ -29,6 +34,7 @@ class AdminController extends AbstractController
         $this->blogPostRepository = $registry->getEntityManagerForClass(BlogPost::class)->getRepository(BlogPost::class);
         $this->authorRepository = $registry->getEntityManagerForClass(Author::class)->getRepository(Author::class);
     }
+
     /**
      * @Route("/author/create", name="author_create")
      */
@@ -55,21 +61,26 @@ class AdminController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
     /**
      * @Route("/create-entry", name="admin_create_entry")
      *
      * @param Request $request
      *
      */
-    public function createEntryAction(Request $request, RegistryInterface $registry)
+    public function createEntryAction(Request $request, RegistryInterface $registry, ImgUploader $imgUploader)
     {
         $blogPost = new BlogPost();
         $author = $this->authorRepository->findOneByUsername($this->getUser()->getUserName());
         $blogPost->setAuthor($author);
         $form = $this->createForm(EntryFormType::class, $blogPost);
         $form->handleRequest($request);
+
         // Check is valid
         if ($form->isSubmitted() && $form->isValid()) {
+            if($imgUploader !== null) {
+                $blogPost->setImgUploaded($imgUploader->upload($blogPost->getImgUploaded()));
+            }
             $em = $registry->getEntityManagerForClass(BlogPost::class);
             $em->persist($blogPost);
             $em->flush();
@@ -80,6 +91,7 @@ class AdminController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
     /**
      * @Route("/", name="admin_index")
      * @Route("/entries", name="admin_entries")
@@ -95,6 +107,7 @@ class AdminController extends AbstractController
             'blogPosts' => $blogPosts
         ]);
     }
+
     /**
      * @Route("/delete-entry/{entryId}", name="admin_delete_entry")
      *
@@ -115,5 +128,10 @@ class AdminController extends AbstractController
         $em->flush();
         $this->addFlash('success', 'Entry was deleted!');
         return $this->redirectToRoute('admin_entries');
+    }
+
+
+    private function generateUniqueImgName(){
+        return md5(uniqid('', true));
     }
 }

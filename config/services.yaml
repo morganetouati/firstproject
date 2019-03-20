@@ -5,6 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
+    img_uploaded: '%kernel.project_dir%/public/uploads/img'
 
 services:
     # default configuration for services in *this* file
@@ -29,3 +30,12 @@ services:
     App\EventListener\Author\CheckIsAuthorListener:
         tags:
             - { name: kernel.event_listener, event: kernel.controller }
+
+    App\EventListener\ImageUploadListener:
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+
+    App\Service\ImgUploader:
+        arguments:
+            $targetDirectory: '%img_uploaded%'
