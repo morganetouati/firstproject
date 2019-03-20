@@ -40,7 +40,7 @@ class EntryFormType extends AbstractType
                 ]
             )
             ->add('imgUploaded', FileType::class,
-                ['label' => 'Image(jpg, jpeg, png allowed',
+                ['label' => 'Image(jpg, jpeg, png allowed)',
                     'attr' => ['class' => 'form-control']
                 ]
             )
