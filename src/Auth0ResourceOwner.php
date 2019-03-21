@@ -6,7 +6,8 @@ use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\GenericOAuth2ResourceOwner;
 
-class Auth0ResourceOwner extends GenericOAuth2ResourceOwner{
+class Auth0ResourceOwner extends GenericOAuth2ResourceOwner
+{
     /**
      * {@inheritdoc}
      */
@@ -24,9 +25,12 @@ class Auth0ResourceOwner extends GenericOAuth2ResourceOwner{
 
     public function getAuthorizationUrl($redirectUri, array $extraParameters = array())
     {
-        return parent::getAuthorizationUrl($redirectUri, array_merge(array(
+        return parent::getAuthorizationUrl(
+            $redirectUri,
+            array_merge(array(
             'audience' => $this->options['audience'],
-            ), $extraParameters));
+            ), $extraParameters)
+        );
     }
 
     /**
@@ -48,7 +52,7 @@ class Auth0ResourceOwner extends GenericOAuth2ResourceOwner{
             'base_url',
             ));
 
-        $normalizer = function(Options $options, $value){
+        $normalizer = function (Options $options, $value) {
             return str_replace('{base_url}', $options['base_url'], $value);
         };
 

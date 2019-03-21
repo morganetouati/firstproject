@@ -19,32 +19,44 @@ class EntryFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', TextType::class,
+            ->add(
+                'title',
+                TextType::class,
                 ['constraints' => [new NotBlank()],
                     'attr' => ['class' => 'form-control']
                 ]
             )
-            ->add('slug', TextType::class,
+            ->add(
+                'slug',
+                TextType::class,
                 ['constraints' => [new NotBlank()],
                     'attr' => ['class' => 'form-control']
                 ]
             )
-            ->add('description', TextareaType::class,
+            ->add(
+                'description',
+                TextareaType::class,
                 ['constraints' => [new NotBlank()],
                     'attr' => ['class' => 'form-control']
                 ]
             )
-            ->add('body', TextareaType::class,
+            ->add(
+                'body',
+                TextareaType::class,
                 ['constraints' => [new NotBlank()],
                     'attr' => ['class' => 'form-control']
                 ]
             )
-            ->add('imgUploaded', FileType::class,
+            ->add(
+                'imgUploaded',
+                FileType::class,
                 ['label' => 'Image(jpg, jpeg, png allowed)',
                     'attr' => ['class' => 'form-control']
                 ]
             )
-            ->add('create', SubmitType::class,
+            ->add(
+                'create',
+                SubmitType::class,
                 ['label' => 'Create',
                     'attr' => ['class' => 'form-control btn-primary pull-right']
                 ]
@@ -70,5 +82,4 @@ class EntryFormType extends AbstractType
     {
         return 'author_form';
     }
-
 }

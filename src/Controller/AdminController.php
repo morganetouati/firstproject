@@ -10,7 +10,6 @@ use App\Service\ImgUploader;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -64,9 +63,7 @@ class AdminController extends AbstractController
 
     /**
      * @Route("/create-entry", name="admin_create_entry")
-     *
      * @param Request $request
-     *
      */
     public function createEntryAction(Request $request, RegistryInterface $registry, ImgUploader $imgUploader)
     {
@@ -78,7 +75,7 @@ class AdminController extends AbstractController
 
         // Check is valid
         if ($form->isSubmitted() && $form->isValid()) {
-            if($imgUploader !== null) {
+            if ($imgUploader !== null) {
                 $blogPost->setImgUploaded($imgUploader->upload($blogPost->getImgUploaded()));
             }
             $em = $registry->getEntityManagerForClass(BlogPost::class);
@@ -110,10 +107,8 @@ class AdminController extends AbstractController
 
     /**
      * @Route("/delete-entry/{entryId}", name="admin_delete_entry")
-     *
      * @param $entryId
-     *
-     * @return \Response
+     * @return /Response
      */
     public function deleteEntryAction($entryId, RegistryInterface $registry)
     {
@@ -128,10 +123,5 @@ class AdminController extends AbstractController
         $em->flush();
         $this->addFlash('success', 'Entry was deleted!');
         return $this->redirectToRoute('admin_entries');
-    }
-
-
-    private function generateUniqueImgName(){
-        return md5(uniqid('', true));
     }
 }

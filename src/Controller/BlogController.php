@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Controller;
+
 use App\Entity\Author;
 use App\Entity\BlogPost;
 use Doctrine\Common\Persistence\ObjectRepository;

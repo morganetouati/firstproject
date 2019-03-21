@@ -7,7 +7,8 @@ use App\Entity\BlogPost;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class Fixtures extends Fixture{ // à envoyer sur AppFixtures
+class Fixtures extends Fixture
+{ // a envoyer sur AppFixtures
     public function load(ObjectManager $manager)
     {
         $author = new Author();
