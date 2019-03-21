@@ -19,18 +19,24 @@ class EntryFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', TextType::class,
-                ['constraints' => [new NotBlank()],
+            ->add(
+                'title',
+                TextType::class,
+                    [
+                        'attr' => ['class' => 'form-control']
+                    ]
+            )
+            ->add(
+                'slug',
+                TextType::class,
+                [
                     'attr' => ['class' => 'form-control']
                 ]
             )
-            ->add('slug', TextType::class,
-                ['constraints' => [new NotBlank()],
-                    'attr' => ['class' => 'form-control']
-                ]
-            )
-            ->add('description', TextareaType::class,
-                ['constraints' => [new NotBlank()],
+            ->add(
+                'description',
+                TextareaType::class,
+                [
                     'attr' => ['class' => 'form-control']
                 ]
             )
