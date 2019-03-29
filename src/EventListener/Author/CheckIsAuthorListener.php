@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\EventListener\Author;
 
 use App\Entity\Author;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
-use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class CheckIsAuthorListener
@@ -43,9 +45,9 @@ class CheckIsAuthorListener
         $this->authorRepository = $registry->getEntityManagerForClass(Author::class)->getRepository(Author::class);
     }
 
-    public function onKernelController(FilterControllerEvent $event)
+    public function onKernelController(FilterControllerEvent $event): void
     {
-        if (!preg_match('/^\/admin/i', $event->getRequest()->getPathInfo())){
+        if (!\preg_match('/^\/admin/i', $event->getRequest()->getPathInfo())) {
             return;
         }
 
@@ -57,7 +59,7 @@ class CheckIsAuthorListener
         }
 
         $route = $this->router->generate('author_create');
-        if (0 === strpos($event->getRequest()->getPathInfo(), $route)){
+        if (0 === \strpos($event->getRequest()->getPathInfo(), $route)) {
             return;
         }
 

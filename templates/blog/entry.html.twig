@@ -1,6 +1,7 @@
-{% extends "base.html.twig" %}
-
-{% block title %}App:blog:entry{% endblock %}
+{% extends 'base.html.twig' %}
+{% block header %}
+    {% block title %}Entry{% endblock %}
+{% endblock %}
 
 {% block body %}
     <div class="container">
@@ -24,7 +25,7 @@
 
                     <h3>Body:</h3>
                     <p>{{ blogPost.body|raw }}</p>
-                    <img src="{{  asset('uploads/img/' ~ blogPost.imgUploaded) }}" alt="{{ blogPost.imgUploaded }}">
+                    <img src="{{ asset('uploads/img/' ~ blogPost.imgUploaded) }}" alt="{{ blogPost.imgUploaded }}">
                 </div>
             </div>
         </div>

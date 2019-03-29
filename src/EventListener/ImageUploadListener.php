@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\EventListener;
 
 use App\Entity\BlogPost;
+use App\Service\ImgUploader;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use App\Service\ImgUploader;
 
 class ImageUploadListener
 {
@@ -18,19 +20,19 @@ class ImageUploadListener
         $this->uploader = $uploader;
     }
 
-    public function prePersist(LifecycleEventArgs $args)
+    public function prePersist(LifecycleEventArgs $args): void
     {
         $entity = $args->getEntity();
         $this->uploadFile($entity);
     }
 
-    public function preUpdate(PreUpdateEventArgs $args)
+    public function preUpdate(PreUpdateEventArgs $args): void
     {
         $entity = $args->getEntity();
         $this->uploadFile($entity);
     }
 
-    private function uploadFile($entity)
+    private function uploadFile($entity): void
     {
         if (!$entity instanceof BlogPost){
             return;
@@ -46,14 +48,15 @@ class ImageUploadListener
         }
     }
 
-    public function postLoad(LifecycleEventArgs $args){
+    public function postLoad(LifecycleEventArgs $args): void
+    {
         $entity = $args->getEntity();
         if (!$entity instanceof BlogPost){
             return;
         }
 
-        if ($imgName = $entity->getImgUploaded()){
-            $entity->setImgUploaded(new File($this->uploader->getTargetDirectory().'/'.$imgName));
+        if ($imgName = $entity->getImgUploaded()) {
+            $entity->setImgUploaded(new File($this->uploader->getTargetDirectory() . '/' . $imgName));
         }
     }
 }

@@ -1,14 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
+use App\Repository\AuthorRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Author
+ * Author.
  *
  * @ORM\Table(name="author")
- * @ORM\Entity(repositoryClass="App\Repository\AuthorRepository")
+ * @ORM\Entity(repositoryClass=AuthorRepository::class)
  */
 class Author
 {
@@ -84,9 +88,8 @@ class Author
      */
     private $github;
 
-
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -96,7 +99,7 @@ class Author
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -110,7 +113,7 @@ class Author
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -120,7 +123,7 @@ class Author
     }
 
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
      *
@@ -134,7 +137,7 @@ class Author
     }
 
     /**
-     * Get title
+     * Get title.
      *
      * @return string
      */
@@ -144,7 +147,7 @@ class Author
     }
 
     /**
-     * Set username
+     * Set username.
      *
      * @param string $username
      *
@@ -158,7 +161,7 @@ class Author
     }
 
     /**
-     * Get username
+     * Get username.
      *
      * @return string
      */
@@ -168,7 +171,7 @@ class Author
     }
 
     /**
-     * Set company
+     * Set company.
      *
      * @param string $company
      *
@@ -182,7 +185,7 @@ class Author
     }
 
     /**
-     * Get company
+     * Get company.
      *
      * @return string
      */
@@ -192,7 +195,7 @@ class Author
     }
 
     /**
-     * Set shortBio
+     * Set shortBio.
      *
      * @param string $shortBio
      *
@@ -206,7 +209,7 @@ class Author
     }
 
     /**
-     * Get shortBio
+     * Get shortBio.
      *
      * @return string
      */
@@ -216,7 +219,7 @@ class Author
     }
 
     /**
-     * Set phone
+     * Set phone.
      *
      * @param string $phone
      *
@@ -230,7 +233,7 @@ class Author
     }
 
     /**
-     * Get phone
+     * Get phone.
      *
      * @return string
      */
@@ -240,7 +243,7 @@ class Author
     }
 
     /**
-     * Set facebook
+     * Set facebook.
      *
      * @param string $facebook
      *
@@ -254,7 +257,7 @@ class Author
     }
 
     /**
-     * Get facebook
+     * Get facebook.
      *
      * @return string
      */
@@ -264,7 +267,7 @@ class Author
     }
 
     /**
-     * Set twitter
+     * Set twitter.
      *
      * @param string $twitter
      *
@@ -278,7 +281,7 @@ class Author
     }
 
     /**
-     * Get twitter
+     * Get twitter.
      *
      * @return string
      */
@@ -288,7 +291,7 @@ class Author
     }
 
     /**
-     * Set github
+     * Set github.
      *
      * @param string $github
      *
@@ -302,7 +305,7 @@ class Author
     }
 
     /**
-     * Get github
+     * Get github.
      *
      * @return string
      */
