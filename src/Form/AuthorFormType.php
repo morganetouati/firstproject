@@ -23,7 +23,6 @@ class AuthorFormType extends AbstractType
                 'name',
                 TextType::class,
                 [
-                    'constraints' => [new NotBlank()],
                     'attr' => ['class' => 'form-control']
                 ]
             )
@@ -31,7 +30,6 @@ class AuthorFormType extends AbstractType
                 'title',
                 TextType::class,
                 [
-                    'constraints' => [new NotBlank()],
                     'attr' => ['class' => 'form-control']
                 ]
             )
@@ -39,7 +37,6 @@ class AuthorFormType extends AbstractType
                 'company',
                 TextType::class,
                 [
-                    'constraints' => [new NotBlank()],
                     'attr' => ['class' => 'form-control']
                 ]
             )
@@ -47,7 +44,6 @@ class AuthorFormType extends AbstractType
                 'shortBio',
                 TextareaType::class,
                 [
-                    'constraints' => [new NotBlank()],
                     'attr' => ['class' => 'form-control']
                 ]
             )
