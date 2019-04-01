@@ -29,28 +29,28 @@ class BlogPost
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank
      * @ORM\Column(name="title", type="string", length=255)
      */
     private $title;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank
      * @ORM\Column(name="slug", type="string", length=255, unique=true)
      */
     private $slug;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank
      * @ORM\Column(name="description", type="string", length=2000)
      */
     private $description;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank
      * @ORM\Column(name="body", type="text")
      */
     private $body;
@@ -247,7 +247,6 @@ class BlogPost
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
-
         return $this;
     }
 

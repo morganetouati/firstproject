@@ -27,63 +27,63 @@ class Author
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank
      * @ORM\Column(name="name", type="string", length=255, unique=true)
      */
     private $name;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank
      * @ORM\Column(name="title", type="string", length=255)
      */
     private $title;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank
      * @ORM\Column(name="username", type="string", length=255, unique=true)
      */
     private $username;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank
      * @ORM\Column(name="company", type="string", length=255)
      */
     private $company;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank
      * @ORM\Column(name="short_bio", type="string", length=500)
      */
     private $shortBio;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank
      * @ORM\Column(name="phone", type="string", length=255, nullable=true)
      */
     private $phone;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank
      * @ORM\Column(name="facebook", type="string", length=255, nullable=true)
      */
     private $facebook;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank
      * @ORM\Column(name="twitter", type="string", length=255, nullable=true)
      */
     private $twitter;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank
      * @ORM\Column(name="github", type="string", length=255, nullable=true)
      */
     private $github;
