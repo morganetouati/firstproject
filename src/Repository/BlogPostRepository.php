@@ -45,6 +45,4 @@ class BlogPostRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
-
-
 }

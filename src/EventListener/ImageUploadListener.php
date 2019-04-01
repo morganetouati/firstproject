@@ -32,27 +32,27 @@ class ImageUploadListener
 
     private function uploadFile($entity)
     {
-        if (!$entity instanceof BlogPost){
+        if (!$entity instanceof BlogPost) {
             return;
         }
         $img = $entity->getImgUploaded();
 
-        if ($img instanceof UploadedFile){
+        if ($img instanceof UploadedFile) {
             $imgName = $this->uploader->upload($img);
             $entity->setImgUploaded($imgName);
-        }
-        elseif($img instanceof File){
+        } elseif ($img instanceof File) {
             $entity->setImgUploaded($img->getFilename());
         }
     }
 
-    public function postLoad(LifecycleEventArgs $args){
+    public function postLoad(LifecycleEventArgs $args)
+    {
         $entity = $args->getEntity();
-        if (!$entity instanceof BlogPost){
+        if (!$entity instanceof BlogPost) {
             return;
         }
 
-        if ($imgName = $entity->getImgUploaded()){
+        if ($imgName = $entity->getImgUploaded()) {
             $entity->setImgUploaded(new File($this->uploader->getTargetDirectory().'/'.$imgName));
         }
     }

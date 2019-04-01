@@ -33,10 +33,12 @@ class CheckIsAuthorListener
      */
     private $authorRepository;
 
-    public function __construct(RouterInterface $router, SessionInterface $session,
-                                TokenStorageInterface $tokenStorage,
-                                RegistryInterface $registry)
-    {
+    public function __construct(
+        RouterInterface $router,
+        SessionInterface $session,
+        TokenStorageInterface $tokenStorage,
+        RegistryInterface $registry
+    ) {
         $this->router = $router;
         $this->session = $session;
         $this->tokenStorage = $tokenStorage;
@@ -45,26 +47,26 @@ class CheckIsAuthorListener
 
     public function onKernelController(FilterControllerEvent $event)
     {
-        if (!preg_match('/^\/admin/i', $event->getRequest()->getPathInfo())){
+        if (!preg_match('/^\/admin/i', $event->getRequest()->getPathInfo())) {
             return;
         }
 
-        if (null === $user = $this->tokenStorage->getToken()->getUser()){
+        if (null === $user = $this->tokenStorage->getToken()->getUser()) {
             return;
         }
-        if(true === $this->session->get('user_is_author')){
+        if (true === $this->session->get('user_is_author')) {
             return;
         }
 
         $route = $this->router->generate('author_create');
-        if (0 === strpos($event->getRequest()->getPathInfo(), $route)){
+        if (0 === strpos($event->getRequest()->getPathInfo(), $route)) {
             return;
         }
 
-        if ($author = $this->authorRepository->findOneByUsername($user->getUsername())){
+        if ($author = $this->authorRepository->findOneByUsername($user->getUsername())) {
             $this->session->set('user_is_author', true);
         }
-        if (!$author && $this->session->get('pending_user_is_author')){
+        if (!$author && $this->session->get('pending_user_is_author')) {
             $this->session->getFlashBag()->add(
                 'warning',
                 'Your author access is being set up, this may take up to 30 seconds. Please try again shortly.'
