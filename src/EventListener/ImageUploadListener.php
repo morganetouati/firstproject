@@ -34,16 +34,15 @@ class ImageUploadListener
 
     private function uploadFile($entity): void
     {
-        if (!$entity instanceof BlogPost){
+        if (!$entity instanceof BlogPost) {
             return;
         }
         $img = $entity->getImgUploaded();
 
-        if ($img instanceof UploadedFile){
+        if ($img instanceof UploadedFile) {
             $imgName = $this->uploader->upload($img);
             $entity->setImgUploaded($imgName);
-        }
-        elseif($img instanceof File){
+        } elseif ($img instanceof File) {
             $entity->setImgUploaded($img->getFilename());
         }
     }
@@ -51,7 +50,7 @@ class ImageUploadListener
     public function postLoad(LifecycleEventArgs $args): void
     {
         $entity = $args->getEntity();
-        if (!$entity instanceof BlogPost){
+        if (!$entity instanceof BlogPost) {
             return;
         }
 

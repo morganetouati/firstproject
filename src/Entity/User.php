@@ -3,10 +3,11 @@
 declare(strict_types=1);
 
 namespace App\Entity;
-use Doctrine\ORM\Mapping as ORM ;
-use Symfony\Component\Validator\Constraints as Assert;
+
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="user")
@@ -25,7 +26,7 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=25, unique=true)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\Length(max=25)
      */
     private $username;
@@ -37,9 +38,9 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=60, unique=true)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\Length(max=60)
-     * @Assert\Email()
+     * @Assert\Email
      */
     private $email;
 
@@ -62,6 +63,7 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     *
      * @var \DateTime
      */
     private $passwordRequestedAt;
@@ -95,9 +97,9 @@ class User implements UserInterface, \Serializable
     public function setUsername($username)
     {
         $this->username = $username;
+
         return $this;
     }
-
 
     public function getPassword()
     {
@@ -107,6 +109,7 @@ class User implements UserInterface, \Serializable
     public function setPassword($password)
     {
         $this->password = $password;
+
         return $this;
     }
 
@@ -124,6 +127,7 @@ class User implements UserInterface, \Serializable
     public function setEmail($email)
     {
         $this->email = $email;
+
         return $this;
     }
 
@@ -141,6 +145,7 @@ class User implements UserInterface, \Serializable
     public function setIsActive($isActive)
     {
         $this->isActive = $isActive;
+
         return $this;
     }
 
@@ -152,7 +157,7 @@ class User implements UserInterface, \Serializable
         return null;
     }
 
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
     }
 
@@ -163,15 +168,16 @@ class User implements UserInterface, \Serializable
 
     public function setRoles(array $roles)
     {
-        if (!in_array('ROLE_USER', $roles)) {
+        if (!\in_array('ROLE_USER', $roles, true)) {
             $roles[] = 'ROLE_USER';
         }
         foreach ($roles as $role) {
-            if (substr($role, 0, 5) !== 'ROLE_') {
+            if ('ROLE_' !== \substr($role, 0, 5)) {
                 throw new InvalidArgumentException("Chaque rôle doit commencer par 'ROLE_'");
             }
         }
         $this->roles = $roles;
+
         return $this;
     }
 
@@ -180,7 +186,7 @@ class User implements UserInterface, \Serializable
         return $this->plainPassword;
     }
 
-    public function setPlainPassword($password)
+    public function setPlainPassword($password): void
     {
         $this->plainPassword = $password;
     }
@@ -199,6 +205,7 @@ class User implements UserInterface, \Serializable
     public function setPasswordRequestedAt($passwordRequestedAt)
     {
         $this->passwordRequestedAt = $passwordRequestedAt;
+
         return $this;
     }
 
@@ -218,7 +225,6 @@ class User implements UserInterface, \Serializable
         $this->csrf_token = $csrf_token;
     }
 
-
     /**
      * @see \Serializable::serialize()
      */
@@ -227,28 +233,27 @@ class User implements UserInterface, \Serializable
         /*
          * ! Don't serialize $roles field !
          */
-        return \serialize(array(
+        return \serialize([
             $this->id,
             $this->username,
             $this->email,
             $this->salt,
             $this->password,
-            $this->isActive
-        ));
+            $this->isActive,
+        ]);
     }
 
     /**
      * @see \Serializable::unserialize()
      */
-    public function unserialize($serialized)
+    public function unserialize($serialized): void
     {
-        list (
+        list(
             $this->id,
             $this->username,
             $this->email,
             $this->salt,
             $this->password,
-            $this->isActive)=\unserialize($serialized);
+            $this->isActive) = \unserialize($serialized);
     }
-
 }

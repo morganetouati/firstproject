@@ -23,9 +23,9 @@ class ImgUploader
     {
         $imgName = \md5(\uniqid('', true)) . '.' . $img->guessExtension();
 
-        try{
+        try {
             $img->move($this->getTargetDirectory(), $imgName);
-        } catch (FileException $e){
+        } catch (FileException $e) {
             return $e;
         }
 
@@ -36,5 +36,4 @@ class ImgUploader
     {
         return $this->targetDirectory;
     }
-
 }

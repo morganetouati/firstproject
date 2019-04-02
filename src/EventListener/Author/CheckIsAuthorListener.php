@@ -51,10 +51,10 @@ class CheckIsAuthorListener
             return;
         }
 
-        if (null === $user = $this->tokenStorage->getToken()->getUser()){
+        if (null === $user = $this->tokenStorage->getToken()->getUser()) {
             return;
         }
-        if(true === $this->session->get('user_is_author')){
+        if (true === $this->session->get('user_is_author')) {
             return;
         }
 
@@ -63,10 +63,10 @@ class CheckIsAuthorListener
             return;
         }
 
-        if ($author = $this->authorRepository->findOneByUsername($user->getUsername())){
+        if ($author = $this->authorRepository->findOneByUsername($user->getUsername())) {
             $this->session->set('user_is_author', true);
         }
-        if (!$author && $this->session->get('pending_user_is_author')){
+        if (!$author && $this->session->get('pending_user_is_author')) {
             $this->session->getFlashBag()->add(
                 'warning',
                 'Your author access is being set up, this may take up to 30 seconds. Please try again shortly.'

@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service;
 
-use Symfony\Component\Templating\EngineInterface;
 use Twig\Environment;
 
 class Mailer
@@ -16,7 +17,7 @@ class Mailer
         $this->mailer = $mailer;
     }
 
-    public function sendMessage($from, $to, $subject, $body, $attachement = null)
+    public function sendMessage($from, $to, $subject, $body, $attachement = null): void
     {
         $mail = (new \Swift_Message($subject))
             ->setFrom($from)

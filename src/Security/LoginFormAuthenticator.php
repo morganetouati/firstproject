@@ -85,7 +85,6 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     {
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($this->urlGenerator->generate('entries'));
-
         }
 
         // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
@@ -96,5 +95,4 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     {
         return $this->urlGenerator->generate('login');
     }
-
 }

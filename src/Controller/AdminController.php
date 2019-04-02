@@ -13,7 +13,6 @@ use App\Repository\BlogPostRepository;
 use App\Service\ImgUploader;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -72,7 +71,6 @@ class AdminController extends AbstractController
      * @Route("/create-entry", name="admin_create_entry")
      *
      * @param Request $request
-     *
      */
     public function createEntryAction(Request $request, RegistryInterface $registry, ImgUploader $imgUploader)
     {
@@ -141,8 +139,8 @@ class AdminController extends AbstractController
         return $this->redirectToRoute('admin_entries');
     }
 
-
-    private function generateUniqueImgName(){
-        return md5(uniqid('', true));
+    private function generateUniqueImgName()
+    {
+        return \md5(\uniqid('', true));
     }
 }
