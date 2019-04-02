@@ -14,6 +14,7 @@ use App\Service\ImgUploader;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -40,7 +41,7 @@ class AdminController extends AbstractController
     /**
      * @Route("/author/create", name="author_create")
      */
-    public function createAuthorAction(Request $request, RegistryInterface $registry)
+    public function createAuthorAction(Request $request, RegistryInterface $registry): Response
     {
         if ($this->authorRepository->findOneByUsername($this->getUser()->getUserName())) {
             // Redirect to dashboard.
@@ -72,7 +73,7 @@ class AdminController extends AbstractController
      *
      * @param Request $request
      */
-    public function createEntryAction(Request $request, RegistryInterface $registry, ImgUploader $imgUploader)
+    public function createEntryAction(Request $request, RegistryInterface $registry, ImgUploader $imgUploader): Response
     {
         $blogPost = new BlogPost();
         $author = $this->authorRepository->findOneByUsername($this->getUser()->getUserName());
@@ -122,7 +123,7 @@ class AdminController extends AbstractController
      *
      * @return \Response
      */
-    public function deleteEntryAction($entryId, RegistryInterface $registry)
+    public function deleteEntryAction($entryId, RegistryInterface $registry): Response
     {
         $blogPost = $this->blogPostRepository->findOneById($entryId);
         $author = $this->authorRepository->findOneByUsername($this->getUser()->getUserName());

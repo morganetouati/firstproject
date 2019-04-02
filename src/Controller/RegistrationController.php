@@ -9,6 +9,7 @@ use App\Form\UserFormType;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -17,7 +18,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/registration", name="register")
      */
-    public function register(Request $request, RegistryInterface $registry, UserPasswordEncoderInterface $passwordEncoder)
+    public function register(Request $request, RegistryInterface $registry, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $user = new User();
         $form = $this->createForm(UserFormType::class, $user);
