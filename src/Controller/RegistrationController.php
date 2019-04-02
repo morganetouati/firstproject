@@ -8,11 +8,15 @@ use App\Entity\User;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Form\UserFormType;
 
 class RegistrationController extends AbstractController
 {
+    /**
+     * @Route("/registration", name="register")
+     */
     public function register(Request $request, RegistryInterface $registry, UserPasswordEncoderInterface $passwordEncoder)
     {
         $user = new User();
