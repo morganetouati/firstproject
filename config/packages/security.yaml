@@ -31,6 +31,9 @@ security:
       logout:
         path: /logout
         target: /
+      guard:
+          authenticators:
+            - App\Security\LoginFormAuthenticator
 
     # main:
       #pattern: ^/
