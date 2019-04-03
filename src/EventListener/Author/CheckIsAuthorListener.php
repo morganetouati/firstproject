@@ -42,7 +42,7 @@ class CheckIsAuthorListener
         $this->router = $router;
         $this->session = $session;
         $this->tokenStorage = $tokenStorage;
-        $this->authorRepository = $registry->getEntityManagerForClass(Author::class)->getRepository(Author::class);
+        $this->authorRepository = $registry->getManagerForClass(Author::class)->getRepository(Author::class);
     }
 
     public function onKernelController(FilterControllerEvent $event): void

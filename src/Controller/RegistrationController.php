@@ -27,7 +27,7 @@ class RegistrationController extends AbstractController
             $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
 
-            $em = $registry->getEntityManagerForClass(User::class);
+            $em = $registry->getManagerForClass(User::class);
             $em->persist($user);
             $em->flush();
 

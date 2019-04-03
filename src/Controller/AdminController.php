@@ -54,7 +54,7 @@ class AdminController extends AbstractController
         $form = $this->createForm(AuthorFormType::class, $author);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $registry->getEntityManagerForClass(Author::class);
+            $em = $registry->getManagerForClass(Author::class);
             $em->persist($author);
             $em->flush($author);
             $request->getSession()->set('user_is_author', true);
@@ -86,7 +86,7 @@ class AdminController extends AbstractController
             if (null !== $imgUploader) {
                 $blogPost->setImgUploaded($imgUploader->upload($blogPost->getImgUploaded()));
             }
-            $em = $registry->getEntityManagerForClass(BlogPost::class);
+            $em = $registry->getManagerForClass(BlogPost::class);
             $em->persist($blogPost);
             $em->flush();
             $this->addFlash('success', 'Congratulations! Your post is created');
@@ -132,7 +132,7 @@ class AdminController extends AbstractController
 
             return $this->redirectToRoute('admin_entries');
         }
-        $em = $registry->getEntityManagerForClass(BlogPost::class);
+        $em = $registry->getManagerForClass(BlogPost::class);
         $em->remove($blogPost);
         $em->flush();
         $this->addFlash('success', 'Entry was deleted!');
