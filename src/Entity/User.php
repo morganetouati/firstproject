@@ -215,7 +215,7 @@ class User implements UserInterface, \Serializable
 
     public function serialize()
     {
-        return serialize([
+        return \serialize([
             $this->id,
             $this->username,
             $this->email,
@@ -233,7 +233,6 @@ class User implements UserInterface, \Serializable
             $this->email,
             $this->salt,
             $this->password,
-            $this->isActive,
-            ) = unserialize($serialized, ['allowed_classes' => false]);
+            $this->isActive) = \unserialize($serialized, ['allowed_classes' => false]);
     }
 }
