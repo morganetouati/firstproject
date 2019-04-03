@@ -56,7 +56,7 @@ class BlogController extends AbstractController
      */
     public function entryAction(String $slug)
     {
-        $blogPost = $this->blogPostRepository->findOneBySlug('slug');
+        $blogPost = $this->blogPostRepository->findOneBySlug($slug);
         if (!$blogPost) {
             $this->addFlash('error', 'Unable to find entry!');
 
