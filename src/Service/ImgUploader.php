@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace App\Service;
 
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -18,13 +21,14 @@ class ImgUploader
 
     public function upload(UploadedFile $img)
     {
-        $imgName = md5(uniqid('', true)).'.'.$img->guessExtension();
+        $imgName = \md5(\uniqid('', true)) . '.' . $img->guessExtension();
 
         try {
             $img->move($this->getTargetDirectory(), $imgName);
         } catch (FileException $e) {
             return $e;
         }
+
         return $imgName;
     }
 

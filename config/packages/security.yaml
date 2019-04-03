@@ -1,23 +1,51 @@
 security:
-    encoders:
-        Symfony\Component\Security\Core\User\User: bcrypt
 
-    providers:
-        main:
-            memory:
-                users:
-                    admin:
-                        password: '$2y$13$4svJGPjaSwA.hJr0f3ksEOYtCV8U5LzLGp08vJ.sV3uvPF2EgPW5.' # password
-                        roles: [ 'ROLE_ADMIN' , 'ROLE_USER' ]
+  role_hierarchy:
+    ROLE_ADMIN: ROLE_USER
+    ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
-    firewalls:
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-        main:
-            http_basic:
-                realm: Secured Area
-            anonymous: ~
+  encoders:
+    App\Entity\User: bcrypt
+    Symfony\Component\Security\Core\User\User: bcrypt
 
-    access_control:
-        - { path: ^/admin , roles: ROLE_ADMIN }
+  providers:
+    main:
+      memory:
+        users:
+          admin:
+            password: '$2y$13$4svJGPjaSwA.hJr0f3ksEOYtCV8U5LzLGp08vJ.sV3uvPF2EgPW5.' # password
+            roles: [ 'ROLE_ADMIN' , 'ROLE_USER' ]
+
+  firewalls:
+    dev:
+      pattern: ^/(_(profiler|wdt)|css|images|js)/
+      security: false
+
+    secured_area:
+      pattern: ^/
+      anonymous: ~
+      form_login:
+        login_path: login
+        check_path: login
+        csrf_token_generator: security.csrf.token_manager
+      logout:
+        path: /logout
+        target: /
+      guard:
+          authenticators:
+            - App\Security\LoginFormAuthenticator
+
+    # main:
+      #pattern: ^/
+     # switch_user: ~
+     # user_checker: App\Security\UserChecker
+      #http_basic:
+      #  realm: Secured Area
+     # guard:
+     #   authenticators:
+     #     - App\Security\LoginFormAuthenticator
+
+  access_control:
+    - { path: ^/admin , roles: ROLE_ADMIN }
+    - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }

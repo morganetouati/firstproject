@@ -159,3 +159,18 @@ h6, .h6 {
 .blog-footer p:last-child {
     margin-bottom: 0;
 }
+
+.form{
+    margin: 5em;
+    width: 30em;
+    border: 1px dotted black;
+}
+
+.form .form-group{
+    padding: 3px;
+}
+.form label{
+    padding: 5px;
+    font-size: 16px;
+    color:  black;
+}

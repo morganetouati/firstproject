@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <p>Hello, <br>
+        Click here to change your password
+        <a href="{{ absolute_url(path('resetting', {'id': user.id, 'csrf_token': user.csrf_token})) }}">Change
+            password</a>
+    </p>
+{% endblock %}
