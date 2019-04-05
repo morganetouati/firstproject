@@ -1,16 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
+use App\Repository\BlogPostRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * BlogPost
+ * BlogPost.
  *
  * @ORM\Table(name="blog_post")
- * @ORM\Entity(repositoryClass="App\Repository\BlogPostRepository")
+ * @ORM\Entity(repositoryClass=BlogPostRepository::class)
  * @ORM\HasLifecycleCallbacks
  */
 class BlogPost
@@ -55,7 +58,7 @@ class BlogPost
     /**
      * @var Author
      *
-     * @ORM\ManyToOne(targetEntity="Author")
+     * @ORM\ManyToOne(targetEntity="Author", fetch="EAGER")
      * @ORM\JoinColumn(name="author_id", referencedColumnName="id")
      */
     private $author;
@@ -81,7 +84,7 @@ class BlogPost
     private $imgUploaded;
 
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -91,7 +94,7 @@ class BlogPost
     }
 
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
      *
@@ -105,7 +108,7 @@ class BlogPost
     }
 
     /**
-     * Get title
+     * Get title.
      *
      * @return string
      */
@@ -115,7 +118,7 @@ class BlogPost
     }
 
     /**
-     * Set slug
+     * Set slug.
      *
      * @param string $slug
      *
@@ -129,7 +132,7 @@ class BlogPost
     }
 
     /**
-     * Get slug
+     * Get slug.
      *
      * @return string
      */
@@ -139,7 +142,7 @@ class BlogPost
     }
 
     /**
-     * Set description
+     * Set description.
      *
      * @param string $description
      *
@@ -153,7 +156,7 @@ class BlogPost
     }
 
     /**
-     * Get description
+     * Get description.
      *
      * @return string
      */
@@ -163,7 +166,7 @@ class BlogPost
     }
 
     /**
-     * Set body
+     * Set body.
      *
      * @param string $body
      *
@@ -177,7 +180,7 @@ class BlogPost
     }
 
     /**
-     * Get body
+     * Get body.
      *
      * @return string
      */
@@ -187,7 +190,7 @@ class BlogPost
     }
 
     /**
-     * Set author
+     * Set author.
      *
      * @param Author $author
      *
@@ -201,7 +204,7 @@ class BlogPost
     }
 
     /**
-     * Get author
+     * Get author.
      *
      * @return Author
      */
@@ -211,7 +214,7 @@ class BlogPost
     }
 
     /**
-     * Set createdAt
+     * Set createdAt.
      *
      * @param \DateTime $createdAt
      *
@@ -225,7 +228,7 @@ class BlogPost
     }
 
     /**
-     * Get createdAt
+     * Get createdAt.
      *
      * @return \DateTime
      */
@@ -235,7 +238,7 @@ class BlogPost
     }
 
     /**
-     * Set updatedAt
+     * Set updatedAt.
      *
      * @param \DateTime $updatedAt
      *
@@ -244,11 +247,12 @@ class BlogPost
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
+
         return $this;
     }
 
     /**
-     * Get updatedAt
+     * Get updatedAt.
      *
      * @return \DateTime
      */
@@ -268,13 +272,14 @@ class BlogPost
     public function setImgUploaded($imgUploaded)
     {
         $this->imgUploaded = $imgUploaded;
+
         return $this;
     }
 
     /**
      * @ORM\PrePersist
      */
-    public function prePersist()
+    public function prePersist(): void
     {
         if (!$this->getCreatedAt()) {
             $this->setCreatedAt(new \DateTime());
@@ -288,7 +293,7 @@ class BlogPost
     /**
      * @ORM\PreUpdate
      */
-    public function preUpdate()
+    public function preUpdate(): void
     {
         $this->setUpdatedAt(new \DateTime());
     }

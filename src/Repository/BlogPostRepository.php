@@ -1,35 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\BlogPost;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
-/**
- * @method BlogPost|null find($id, $lockMode = null, $lockVersion = null)
- * @method BlogPost|null findOneBy(array $criteria, array $orderBy = null)
- * @method BlogPost[]    findAll()
- * @method BlogPost[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- */
-class BlogPostRepository extends ServiceEntityRepository
+class BlogPostRepository extends EntityRepository
 {
-    public function __construct(RegistryInterface $registry)
-    {
-        parent::__construct($registry, BlogPost::class);
-    }
-
-    /**
+    /**bp
      * @param int $page
      * @param int $limit
+     *
      * @return array
      */
-    public function getAllPosts($page = 1, $limit = 5)
+    public function getAllPosts($page = 1, $limit = 5): array
     {
-        return $this->createQueryBuilder('bp')
+        return $this->getEntityManager()->createQueryBuilder()
             ->select('bp')
+            ->from(BlogPost::class, 'bp')
             ->orderBy('bp.id', 'DESC')
-            ->setFirstResult($limit *(--$page))
+            ->setFirstResult($limit * (--$page))
             ->setMaxResults($limit)
             ->getQuery()
             ->getResult();
@@ -38,11 +32,36 @@ class BlogPostRepository extends ServiceEntityRepository
     /**
      * @return array
      */
-    public function getPostCount()
+    public function getPostCount(): array
     {
-        return $this->createQueryBuilder('bp')
+        return $this->getEntityManager()->createQueryBuilder()
             ->select('count(bp)')
+            ->from(BlogPost::class, 'bp')
             ->getQuery()
-            ->getSingleScalarResult();
+            ->getSingleResult();
+    }
+
+    public function findOneBySlug(string $slug): ?BlogPost
+    {
+        //  $slug = $slug['slug'];
+        return $result = $this->getEntityManager()->createQueryBuilder()
+            ->select('bp')
+            ->from(BlogPost::class, 'bp')
+            ->where('bp.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ->getOneOrNullResult();
+        //dump($result); exit();
+    }
+
+    public function findByAuthor(string $author): ?BlogPost
+    {
+        return $result = $this->getEntityManager()->createQueryBuilder()
+            ->select('bp')
+            ->from(BlogPost::class, 'bp')
+            ->where('bp.author = :author')
+            ->setParameter('author', $author)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }
