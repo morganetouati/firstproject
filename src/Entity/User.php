@@ -219,7 +219,6 @@ class User implements UserInterface, \Serializable
             $this->id,
             $this->username,
             $this->email,
-            $this->salt,
             $this->password,
             $this->isActive,
         ]);
@@ -231,7 +230,6 @@ class User implements UserInterface, \Serializable
             $this->id,
             $this->username,
             $this->email,
-            $this->salt,
             $this->password,
             $this->isActive) = \unserialize($serialized, ['allowed_classes' => false]);
     }

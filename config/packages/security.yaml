@@ -32,18 +32,18 @@ security:
         path: /logout
         target: /
       guard:
-          authenticators:
-            - App\Security\LoginFormAuthenticator
+        authenticators:
+          - App\Security\LoginFormAuthenticator
 
-    # main:
+      # main:
       #pattern: ^/
-     # switch_user: ~
-     # user_checker: App\Security\UserChecker
+      # switch_user: ~
+      # user_checker: App\Security\UserChecker
       #http_basic:
       #  realm: Secured Area
-     # guard:
-     #   authenticators:
-     #     - App\Security\LoginFormAuthenticator
+      # guard:
+      #   authenticators:
+      #     - App\Security\LoginFormAuthenticator
 
   access_control:
     - { path: ^/admin , roles: ROLE_ADMIN }
