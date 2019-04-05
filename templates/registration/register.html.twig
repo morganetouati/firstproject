@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+    {% block title %}Sign up{% endblock %}
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_row(form.username) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.plainPassword.first) }}
+    {{ form_row(form.plainPassword.second) }}
+    <button type="submit">Sign up</button>
+    {{ form_end(form) }}
+{% endblock %}
