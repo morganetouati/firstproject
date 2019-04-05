@@ -42,7 +42,6 @@ class BlogPostRepository
     }
 
     /**
-     *
      * @param int $page
      * @param int $limit
      * @return array
