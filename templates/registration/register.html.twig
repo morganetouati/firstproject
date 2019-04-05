@@ -1,12 +1,30 @@
 {% extends 'base.html.twig' %}
-
     {% block title %}Sign up{% endblock %}
 {% block body %}
-    {{ form_start(form) }}
-    {{ form_row(form.username) }}
-    {{ form_row(form.email) }}
-    {{ form_row(form.plainPassword.first) }}
-    {{ form_row(form.plainPassword.second) }}
-    <button type="submit">Sign up</button>
-    {{ form_end(form) }}
+    <div class="form" class="form-horizontal">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="panel-title">Sign Up</div>
+            </div>
+        </div>
+        {{ form_start(form) }}
+        <div class="form-group">
+            {{ form_label(form.username) }}
+            {{ form_widget(form.username) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.email) }}
+            {{ form_widget(form.email) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.plainPassword.first) }}
+            {{ form_widget(form.plainPassword.first) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.plainPassword.second) }}
+            {{ form_widget(form.plainPassword.second) }}
+        </div>
+        <button class="btn btn-primary" type="submit">Sign up</button>
+        {{ form_end(form) }}
+    </div>
 {% endblock %}
