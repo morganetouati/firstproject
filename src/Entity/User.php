@@ -113,17 +113,11 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    /*
-     * Get email
-     */
     public function getEmail()
     {
         return $this->email;
     }
 
-    /*
-     * Set email
-     */
     public function setEmail($email)
     {
         $this->email = $email;
@@ -131,17 +125,11 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    /*
-     * Get isActive
-     */
     public function getIsActive()
     {
         return $this->isActive;
     }
 
-    /*
-     * Set isActive
-     */
     public function setIsActive($isActive)
     {
         $this->isActive = $isActive;
@@ -212,7 +200,7 @@ class User implements UserInterface, \Serializable
     /**
      * @return string
      */
-    public function getCsrfToken(): string
+    public function getCsrfToken(): ?string
     {
         return $this->csrf_token;
     }
@@ -225,14 +213,8 @@ class User implements UserInterface, \Serializable
         $this->csrf_token = $csrf_token;
     }
 
-    /**
-     * @see \Serializable::serialize()
-     */
     public function serialize()
     {
-        /*
-         * ! Don't serialize $roles field !
-         */
         return \serialize([
             $this->id,
             $this->username,
@@ -243,9 +225,6 @@ class User implements UserInterface, \Serializable
         ]);
     }
 
-    /**
-     * @see \Serializable::unserialize()
-     */
     public function unserialize($serialized): void
     {
         list(
@@ -254,6 +233,6 @@ class User implements UserInterface, \Serializable
             $this->email,
             $this->salt,
             $this->password,
-            $this->isActive) = \unserialize($serialized);
+            $this->isActive) = \unserialize($serialized, ['allowed_classes' => false]);
     }
 }
