@@ -89,7 +89,10 @@ class User implements UserInterface, \Serializable
         return $this->id;
     }
 
-    public function getUsername()
+    /**
+     * @return string|null
+     */
+    public function getUsername(): ?string
     {
         return $this->username;
     }

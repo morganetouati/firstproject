@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Security;
 
 use App\Entity\User;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -71,26 +70,9 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         }
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['username' => $credentials['username']]);
         if (!$user) {
-            // fail authentication with a custom error
             throw new CustomUserMessageAuthenticationException('username could not be found.');
         }
         return $user;
-/*
-        $token = new CsrfToken('authenticate', $credentials['csrf_token']);
-        if (!$this->csrfTokenManager->isTokenValid($token)) {
-            throw new InvalidCsrfTokenException();
-        }
-        $username = $credentials['username'];
-        return $userProvider->loadUserByUsername($username);*/
-
-            //$user = $this->registry->getManagerForClass(User::class);
-            //$user = $this->UserRepository->findByUsername(['username' => $credentials['username']]);
-
-        //if (!$user) {
-          //  throw new CustomUserMessageAuthenticationException('Username could not be found.');
-        //}
-
-        //return $user;*/
     }
 
     public function checkCredentials($credentials, UserInterface $user)
@@ -104,7 +86,6 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
             return new RedirectResponse($targetPath);
         }
         return new RedirectResponse($this->router->generate('entries'));
-        //throw new \Exception('TODO: provide a valid redirect inside ' . __FILE__);
     }
 
     protected function getLoginUrl()
