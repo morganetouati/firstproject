@@ -10,7 +10,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * BlogPost.
- *
  * @ORM\Table(name="blog_post")
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
