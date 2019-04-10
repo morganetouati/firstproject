@@ -8,7 +8,7 @@
                 <li><a href="{{ path("list_author.twig") }}">List articles</a></li>
                 <li><a href="{{ path("admin_create_entry") }}">create article</a></li>
                 <li><a href="{{ path("author_create") }}">create author</a></li>
-
+                <li><a href="{{ path("admin_index") }}">Admin</a></li>
                 <li><a href="{{ path('logout') }}">logout </a></li>
             {% elseif is_granted('ROLE_USER') %}
                 <li><a href="{{ path('logout') }}">logout </a></li>
