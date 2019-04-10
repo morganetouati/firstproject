@@ -113,7 +113,7 @@ class User implements UserInterface
         return $this;
     }
 
-    /*
+    /**
      * Get email
      */
     public function getEmail()
