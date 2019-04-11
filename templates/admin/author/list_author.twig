@@ -26,25 +26,29 @@
                     <thead>
                     <th>Name</th>
                     <th>Title</th>
-                    <th>Username</th>
+                    <th>Firstname</th>
+                    <th>Email</th>
                     <th>Bio</th>
                     <th>phone</th>
                     <th>Facebook</th>
-                    <th>Twitter/th>
+                    <th>Twitter</th>
                     <th>GitHub</th>
                     <th>Company</th>
+                    <th>Delete</th>
                     </thead>
                     {% for aut in author %}
                         <tr>
                             <td>{{ aut.name }}</td>
                             <td>{{ aut.title }}</td>
-                            <td>{{ aut.username}}</td>
+                            <td>{{ aut.firstname}}</td>
+                            <td>{{ aut.email }}</td>
                             <td>{{ aut.shortBio }}</td>
                             <td>{{ aut.phone }}</td>
                             <td>{{ aut.facebook}}</td>
                             <td>{{ aut.twitter}}</td>
                             <td>{{ aut.github}}</td>
                             <td>{{ aut.company}}</td>
+                            <td><a class="btn btn-danger" href='/'>Delete</a></td>
                         </tr>
                     {% else %}
                         <tr>

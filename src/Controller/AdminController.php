@@ -23,7 +23,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminController extends AbstractController
 {
     /**
-     * @var AuthorRepository
+     * @var AuthorRepositoryPHP Fatal error:  Uncaught Symfony\Component\Debug\Exception\FatalThrowableError: Call to a member function setShortBio() on null in /home/morgane/Bureau/Morgane-formation/firstproject/src/DataFixtures/AppFixtures.php:30
+
      */
     private $authorRepository;
 
@@ -41,30 +42,23 @@ class AdminController extends AbstractController
     /**
      * @Route("/author/create", name="author_create")
      */
-    public function createAuthorAction(Request $request, RegistryInterface $registry): Response
+    public function createAuthorAction(Request $request,RegistryInterface $registry): Response
     {
-        if ($this->authorRepository->findOneByUsername($this->getUser()->getUserName())) {
-            // Redirect to dashboard.
-            $this->addFlash('error', 'Unable to create author, author already exists!');
-
-            return $this->redirectToRoute('homepage');
-        }
         $author = new Author();
-        $author->setUsername($this->getUser()->getUserName());
         $form = $this->createForm(AuthorFormType::class, $author);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $registry->getEntityManagerForClass(Author::class);
             $em->persist($author);
-            $em->flush($author);
+            $em->flush();
+
             $request->getSession()->set('user_is_author', true);
             $this->addFlash('success', 'Congratulations! You are now an author.');
-
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('list_author');
         }
 
-        return $this->render('admin/create_author.html.twig', [
-            'form' => $form->createView(),
+        return $this->render('admin/author/create_author.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 
@@ -104,18 +98,18 @@ class AdminController extends AbstractController
      */
     public function entriesAction()
     {
-    /*    $author = $this->authorRepository->findOneByUsername($this->getUser()->getUserName());
-        $blogPosts = [];
-        if ($author) {
-            $blogPosts = $this->blogPostRepository->findByAuthor('author');
-        }
+        /*    $author = $this->authorRepository->findOneByUsername($this->getUser()->getUserName());
+            $blogPosts = [];
+            if ($author) {
+                $blogPosts = $this->blogPostRepository->findByAuthor('author');
+            }
 
-        return $this->render('admin/entries.html.twig', [
-            'blogPosts' => $blogPosts,
-        ]);*/
+            return $this->render('admin/entries.html.twig', [
+                'blogPosts' => $blogPosts,
+            ]);*/
 
 
-        return $this->render('admin/list_author.twig', [
+        return $this->render('admin/author/list_author.twig', [
             'author' => $this->authorRepository->getAllAuthor()]);
     }
 
@@ -126,20 +120,20 @@ class AdminController extends AbstractController
      *
      * @return /Response
      */
-    public function deleteEntryAction($entryId, RegistryInterface $registry): Response
-    {
-        $blogPost = $this->blogPostRepository->findOneById($entryId);
-        $author = $this->authorRepository->findOneByUsername($this->getUser()->getUserName());
-        if (!$blogPost || $author !== $blogPost->getAuthor()) {
-            $this->addFlash('error', 'Unable to remove entry!');
+    /* public function deleteEntryAction($entryId, RegistryInterface $registry): Response
+     {
+         $blogPost = $this->blogPostRepository->findOneById($entryId);
+         $author = $this->authorRepository->findOneByUsername($this->getUser()->getUserName());
+         if (!$blogPost || $author !== $blogPost->getAuthor()) {
+             $this->addFlash('error', 'Unable to remove entry!');
 
-            return $this->redirectToRoute('admin_entries');
-        }
-        $em = $registry->getEntityManagerForClass(BlogPost::class);
-        $em->remove($blogPost);
-        $em->flush();
-        $this->addFlash('success', 'Entry was deleted!');
+             return $this->redirectToRoute('admin_entries');
+         }
+         $em = $registry->getEntityManagerForClass(BlogPost::class);
+         $em->remove($blogPost);
+         $em->flush();
+         $this->addFlash('success', 'Entry was deleted!');
 
-        return $this->redirectToRoute('admin_entries');
-    }
+         return $this->redirectToRoute('admin_entries');
+     }*/
 }

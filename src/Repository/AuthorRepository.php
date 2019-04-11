@@ -27,14 +27,13 @@ class AuthorRepository
             ->getResult();
     }
 
-  public function findOneByUsername(string $username ): ?Author
+
+  public function findOneByEmail($email)
   {
-      return $result = $this->entityManager->createQueryBuilder()
-          ->select('author')
-          ->from(Author::class, 'author')
-          ->where('author.username = :username')
-          ->setParameter('author', $username)
+      return $this->entityManager->createQuery()
+          ->where('aut.email = :email')
+          ->setParameter('email', $email)
           ->getQuery()
-          ->getOneOrNullResult();
+          ->getResult();
   }
 }

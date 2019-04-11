@@ -42,16 +42,9 @@ class Author
     /**
      * @var string
      * @Assert\NotBlank
-     * @ORM\Column(name="username", type="string", length=255, unique=true)
+     * @ORM\Column(name="firstname", type="string", length=255, unique=true)
      */
-    private $username;
-
-    /**
-     * @var string
-     * @Assert\NotBlank
-     * @ORM\Column(name="company", type="string", length=255)
-     */
-    private $company;
+    private $firstname;
 
     /**
      * @var string
@@ -64,10 +57,25 @@ class Author
      * @var string
      * @Assert\NotBlank
      * @Assert\Length(min=10, max=20, minMessage="min_length", maxMessage="max_length")
-     * @Assert\Regex(pattern="/^\(0\)[0-9]*$")
+     * @Assert\Regex(pattern="/^0[0-9]{9}$/")
      * @ORM\Column(name="phone", type="string", length=10, nullable=true)
      */
     private $phone;
+
+    /**
+     * @ORM\Column(type="string", length=60, unique=true)
+     * @Assert\NotBlank
+     * @Assert\Length(max=60)
+     * @Assert\Email
+     */
+    private $email;
+
+    /**
+     * @var string
+     * @Assert\NotBlank
+     * @ORM\Column(name="company", type="string", length=255)
+     */
+    private $company;
 
     /**
      * @var string
@@ -146,27 +154,45 @@ class Author
     }
 
     /**
-     * Set username.
-     *
-     * @param string $username
-     *
+     * Get firstname.
+     * @return string
+     */
+    public function getFirstname()
+    {
+        return $this->firstname;
+    }
+
+    /**
+     * Set $firstname
+     * @param string $firstname
      * @return Author
      */
-    public function setUsername($username)
+    public function setFirstname($firstname)
     {
-        $this->username = $username;
-
+        $this->firstname = $firstname;
         return $this;
     }
 
     /**
-     * Get username.
+     * Get email.
      *
      * @return string
      */
-    public function getUsername()
+    public function getEmail()
     {
-        return $this->username;
+        return $this->email;
+    }
+
+    /**
+     * Set email.
+     *
+     * @param string $email
+     *
+     * @return Author
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
     }
 
     /**
