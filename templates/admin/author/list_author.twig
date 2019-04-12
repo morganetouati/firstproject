@@ -48,7 +48,7 @@
                             <td>{{ aut.twitter}}</td>
                             <td>{{ aut.github}}</td>
                             <td>{{ aut.company}}</td>
-                            <td><a class="btn btn-danger" href='/'>Delete</a></td>
+                            <td><a class="btn btn-danger" href="{{ path('admin_delete_author', {'authorId': aut.id}) }}">Delete</a></td>
                         </tr>
                     {% else %}
                         <tr>
