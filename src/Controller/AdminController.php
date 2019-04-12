@@ -49,6 +49,7 @@ class AdminController extends AbstractController
         $author = new Author();
         $form = $this->createForm(AuthorFormType::class, $author);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $registry->getEntityManagerForClass(Author::class);
             $em->persist($author);
@@ -66,20 +67,19 @@ class AdminController extends AbstractController
 
     /**
      * @Route("/create-entry", name="admin_create_entry")
-     *
      * @param Request $request
      */
     public function createEntryAction(Request $request, RegistryInterface $registry, ImgUploader $imgUploader): Response
     {
         $blogPost = new BlogPost();
-        $author = $this->authorRepository->findOneByUsername($this->getUser()->getUserName());
-        $blogPost->setAuthor($author);
+        $author = $this->authorRepository->findOneByEmail($email);
+        //$blogPost->setAuthor($author);
         $form = $this->createForm(EntryFormType::class, $blogPost);
         $form->handleRequest($request);
 
         // Check is valid
         if ($form->isSubmitted() && $form->isValid()) {
-            if (null !== $imgUploader) {
+            if ($imgUploader !== null) {
                 $blogPost->setImgUploaded($imgUploader->upload($blogPost->getImgUploaded()));
             }
             $em = $registry->getEntityManagerForClass(BlogPost::class);
@@ -90,7 +90,7 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('admin_entries');
         }
 
-        return $this->render('admin/entry_form.html.twig', [
+        return $this->render('admin/article/entry_form.html.twig', [
             'form' => $form->createView(),
         ]);
     }

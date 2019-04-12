@@ -70,17 +70,17 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @Route("/author/{name}", name="author")
+     * @Route("/author/{authorId}", name="author")
      */
-    public function authorAction($name)
+    public function authorAction($authorId)
     {
-        $author = $this->authorRepository->findOneByUsername($name);
+        $author = $this->authorRepository->findOneById($authorId);
+
         if (!$author) {
             $this->addFlash('error', 'Unable to find author!');
 
             return $this->redirectToRoute('entries');
         }
-
         return $this->render('blog/author.html.twig', [
             'author' => $author,
         ]);
