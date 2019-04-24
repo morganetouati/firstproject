@@ -39,10 +39,11 @@ class AuthorRepository
 
     public function findOneByEmail($email)
     {
-        return $this->entityManager->createQuery()
+        return $this->entityManager->getRepository(Author::class)->find($email);
+        /*return $this->entityManager->createQuery()
             ->where('aut.email = :email')
             ->setParameter('email', $email)
             ->getQuery()
-            ->getResult();
+            ->getResult();*/
     }
 }

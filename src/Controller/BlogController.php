@@ -63,7 +63,6 @@ class BlogController extends AbstractController
 
             return $this->redirectToRoute('entries');
         }
-
         return $this->render('blog/entry.html.twig', [
             'blogPost' => $blogPost,
         ]);

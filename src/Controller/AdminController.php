@@ -15,6 +15,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\ChoiceList\ArrayChoiceList;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -72,13 +73,17 @@ class AdminController extends AbstractController
     public function createEntryAction(Request $request, RegistryInterface $registry, ImgUploader $imgUploader): Response
     {
         $blogPost = new BlogPost();
-        $author = $this->authorRepository->findOneByEmail($email);
+
+        //$author = $this->authorRepository->getAllAuthor();
+
         //$blogPost->setAuthor($author);
+       // $choice_author = [];
         $form = $this->createForm(EntryFormType::class, $blogPost);
         $form->handleRequest($request);
 
         // Check is valid
         if ($form->isSubmitted() && $form->isValid()) {
+
             if ($imgUploader !== null) {
                 $blogPost->setImgUploaded($imgUploader->upload($blogPost->getImgUploaded()));
             }
@@ -86,8 +91,7 @@ class AdminController extends AbstractController
             $em->persist($blogPost);
             $em->flush();
             $this->addFlash('success', 'Congratulations! Your post is created');
-
-            return $this->redirectToRoute('admin_entries');
+            return $this->redirectToRoute('entries');
         }
 
         return $this->render('admin/article/entry_form.html.twig', [

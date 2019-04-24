@@ -36,11 +36,14 @@
                     <div class="form-group col-md-12">
                         {{ form_row(form.imgUploaded) }}
                     </div>
+                    <div class="form-group col-md-12">
+                        {{ form_row(form.author) }}
+                    </div>
                     <div class="form-group col-md-4 pull-right">
                         {{ form_widget(form.create) }}
                     </div>
+                    {{ form_end(form) }}
                 </div>
-                {{ form_end(form) }}
             </div>
         </div>
     </div>
