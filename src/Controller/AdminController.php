@@ -73,17 +73,11 @@ class AdminController extends AbstractController
     public function createEntryAction(Request $request, RegistryInterface $registry, ImgUploader $imgUploader): Response
     {
         $blogPost = new BlogPost();
-
-        //$author = $this->authorRepository->getAllAuthor();
-
-        //$blogPost->setAuthor($author);
-       // $choice_author = [];
         $form = $this->createForm(EntryFormType::class, $blogPost);
         $form->handleRequest($request);
 
         // Check is valid
         if ($form->isSubmitted() && $form->isValid()) {
-
             if ($imgUploader !== null) {
                 $blogPost->setImgUploaded($imgUploader->upload($blogPost->getImgUploaded()));
             }
@@ -134,7 +128,7 @@ class AdminController extends AbstractController
     public function deleteEntryAction($entryId, RegistryInterface $registry): Response
     {
         $blogPost = $this->blogPostRepository->findOneById($entryId);
-        $author = $this->authorRepository->findOneByUsername($this->getUser()->getUserName());
+        $author = $this->authorRepository->findOneByLastname($this->getUser()->getUserName());
         if (!$blogPost || $author !== $blogPost->getAuthor()) {
             $this->addFlash('error', 'Unable to remove entry!');
 

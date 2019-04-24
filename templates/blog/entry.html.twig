@@ -21,7 +21,7 @@
                             Author Unknow
                         {% else %}
                             <a href="{{ path('author', {'authorId': blogPost.author.id}) }}">
-                                {{ blogPost.author.name }}
+                                {{ blogPost.author.lastname }}
                             </a>
                         {% endif %}
                     </p>

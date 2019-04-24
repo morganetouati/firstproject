@@ -33,17 +33,12 @@ class AuthorRepository
         return $this->entityManager->getRepository(Author::class)->find($authorId);
     }
 
-    public function findOneByName($name){
-        return $this->entityManager->getRepository(Author::class)->find($name);
+    public function findOneByLastname($lastname){
+        return $this->entityManager->getRepository(Author::class)->find($lastname);
     }
 
     public function findOneByEmail($email)
     {
         return $this->entityManager->getRepository(Author::class)->find($email);
-        /*return $this->entityManager->createQuery()
-            ->where('aut.email = :email')
-            ->setParameter('email', $email)
-            ->getQuery()
-            ->getResult();*/
     }
 }

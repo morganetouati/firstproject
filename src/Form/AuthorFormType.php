@@ -22,7 +22,7 @@ class AuthorFormType extends AbstractType
     {
         $builder
             ->add(
-                'name',
+                'lastname',
                 TextType::class,
                 [
                     'attr' => ['class' => 'form-control'],

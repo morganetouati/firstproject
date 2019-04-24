@@ -55,7 +55,7 @@ class EntryFormType extends AbstractType
             ->add('author', EntityType::class, [
                     'class' => Author::class,
                     'choice_label' => function (Author $author) {
-                        return $author->getName();
+                        return $author->getFirstname() . ' ' . $author->getLastName();
                     },
                     'attr' => ['class' => 'form-control'],
                 ]
@@ -78,9 +78,6 @@ class EntryFormType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName()
     {
         return 'author_form';

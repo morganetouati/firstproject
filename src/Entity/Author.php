@@ -28,9 +28,9 @@ class Author
     /**
      * @var string
      * @Assert\NotBlank
-     * @ORM\Column(name="name", type="string", length=255, unique=true)
+     * @ORM\Column(name="lastname", type="string", length=255, unique=true)
      */
-    private $name;
+    private $lastname;
 
     /**
      * @var string
@@ -106,22 +106,22 @@ class Author
     }
 
     /**
-     * Set name.
+     * Set lastname.
      *
-     * @param string $name
+     * @param string $lastname
      *
      * @return Author
      */
-    public function setName($name)
+    public function setLastName($lastname)
     {
-        $this->name = $name;
+        $this->lastname = $lastname;
 
         return $this;
     }
 
-    public function getName(): string
+    public function getLastName()
     {
-        return "$this->name - $this->firstname";
+        return $this->lastname;
     }
 
     /**
