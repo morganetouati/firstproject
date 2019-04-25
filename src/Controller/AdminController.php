@@ -114,9 +114,37 @@ class AdminController extends AbstractController
         $this->em->remove($author);
         $this->em->flush();
 
-        $this->addFlash('success', 'Entry was deleted!');
+        $this->addFlash('success', 'Actor was deleted!');
 
         return $this->redirectToRoute('list_author');
+    }
+
+    /**
+     * @Route("/update-author/{authorId}", name="admin_update_author")
+     * @param $authorId
+     * @return /Response
+     */
+
+    public function updateAuthorAction(Author $authorId, Request $request, EntityManagerInterface $em): Response
+    {
+        //$author = new Author();
+        $author = $this->getDoctrine()->getRepository(Author::class)->find($authorId);
+        //$form = $this->createForm($author);
+
+        $form = $this->createForm(AuthorFormType::class, $author);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()){
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+            $this->addFlash('success', 'Actor was updated!');
+            return $this->redirectToRoute('list_author');
+        }
+        return $this->render(
+            'admin/author/update_author.html.twig',
+            ['form' => $form->createView()]
+        );
+
+//        $author = $this->authorRepository->findOneById($authorId);
     }
 
 
