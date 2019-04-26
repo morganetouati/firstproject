@@ -50,6 +50,7 @@ class EntryFormType extends AbstractType
             ->add('imgUploaded', FileType::class,
                 ['label' => 'Image(jpg, jpeg, png allowed)',
                     'attr' => ['class' => 'form-control'],
+                    'data_class' => null
                 ]
             )
             ->add('author', EntityType::class, [
@@ -76,10 +77,5 @@ class EntryFormType extends AbstractType
         $resolver->setDefaults([
             'data_class' => BlogPost::class,
         ]);
-    }
-
-    public function getName()
-    {
-        return 'author_form';
     }
 }

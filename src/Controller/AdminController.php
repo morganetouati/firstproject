@@ -25,6 +25,9 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class AdminController extends AbstractController
 {
+    /** @var int */
+    const POST_LIMIT = 5;
+
     /**
      * @var AuthorRepository
      */
@@ -96,7 +99,7 @@ class AdminController extends AbstractController
     /**
      * @Route("/list_author", name="list_author")
      */
-    public function entriesAction()
+    public function authorAction()
     {
         return $this->render('admin/author/list_author.twig', [
             'author' => $this->authorRepository->getAllAuthor()]);
@@ -124,13 +127,9 @@ class AdminController extends AbstractController
      * @param $authorId
      * @return /Response
      */
-
     public function updateAuthorAction(Author $authorId, Request $request, EntityManagerInterface $em): Response
     {
-        //$author = new Author();
         $author = $this->getDoctrine()->getRepository(Author::class)->find($authorId);
-        //$form = $this->createForm($author);
-
         $form = $this->createForm(AuthorFormType::class, $author);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
@@ -140,13 +139,66 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('list_author');
         }
         return $this->render(
-            'admin/author/update_author.html.twig',
-            ['form' => $form->createView()]
-        );
-
-//        $author = $this->authorRepository->findOneById($authorId);
+            'admin/author/update_author.html.twig', ['form' => $form->createView()]);
     }
 
+    /**
+     * @Route("/entries", name="admin_entries")
+     */
+    public function entriesAction(Request $request)
+    {
+        $page = 1;
+        if ($request->get('page')) {
+            $page = $request->get('page');
+        }
+
+        return $this->render('admin/article/entries.html.twig', [
+            'blogPosts' => $this->blogPostRepository->getAllPosts($page, self::POST_LIMIT),
+            'totalBlogPosts' => $this->blogPostRepository->getPostCount(),
+            'page' => $page,
+            'entryLimit' => self::POST_LIMIT,
+        ]);
+    }
+
+    /**
+     * @Route("/entry/{slug}", name="entry")
+     */
+    public function entryAction(String $slug)
+    {
+        $blogPost = $this->blogPostRepository->findOneBySlug($slug);
+        if (!$blogPost) {
+            $this->addFlash('error', 'Unable to find entry!');
+
+            return $this->redirectToRoute('admin_entries');
+        }
+        return $this->render('blog/entry.html.twig', [
+            'blogPost' => $blogPost,
+        ]);
+    }
+
+    /**
+     * @Route("/update-entry/{entryId}", name="admin_update_entry")
+     * @param BlogPost $entryId
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @return Response
+     */
+    public function updateEntryAction(BlogPost $entryId, Request $request, EntityManagerInterface $em, ImgUploader $imgUploader): Response
+    {
+        $entry = $this->getDoctrine()->getRepository(BlogPost::class)->find($entryId);
+        $form = $this->createForm(EntryFormType::class, $entry);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            if ($imgUploader !== null) {
+                $entry->setImgUploaded($imgUploader->upload($entry->getImgUploaded()));
+            }
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+            $this->addFlash('success', 'Entry was updated');
+            return $this->redirectToRoute('admin_entries');
+        }
+        return $this->render('admin/article/update_entry.html.twig', ['form' => $form->createView()]);
+    }
 
     /**
      * @Route("/delete-entry/{entryId}", name="admin_delete_entry")
@@ -155,18 +207,12 @@ class AdminController extends AbstractController
      */
     public function deleteEntryAction($entryId, RegistryInterface $registry): Response
     {
-        $blogPost = $this->blogPostRepository->findOneById($entryId);
-        $author = $this->authorRepository->findOneByLastname($this->getUser()->getUserName());
-        if (!$blogPost || $author !== $blogPost->getAuthor()) {
-            $this->addFlash('error', 'Unable to remove entry!');
-
-            return $this->redirectToRoute('admin_entries');
-        }
-        $em = $registry->getEntityManagerForClass(BlogPost::class);
-        $em->remove($blogPost);
-        $em->flush();
+        $entry = $this->getDoctrine()->getRepository(BlogPost::class)->find($entryId);
+        $em = $this->getDoctrine()->getManager();
+        $blogPost = $this->blogPostRepository->findByAuthor($entryId);
+        $this->em->remove($entryId);
+        $this->em->flush();
         $this->addFlash('success', 'Entry was deleted!');
-
         return $this->redirectToRoute('admin_entries');
     }
 }

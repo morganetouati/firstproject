@@ -42,11 +42,11 @@
                             <td>{{ aut.title }}</td>
                             <td>{{ aut.firstname}}</td>
                             <td>{{ aut.email }}</td>
-                            <td>{{ aut.shortBio }}</td>
+                            <td><textarea rows="3" cols="20">{{ aut.shortBio }}</textarea></td>
                             <td>{{ aut.phone }}</td>
                             <td>{{ aut.facebook}}</td>
                             <td>{{ aut.twitter}}</td>
-                            <td>{{ aut.github}}</td>
+                            <td>{{ aut.github}}author</td>
                             <td>{{ aut.company}}</td>
                             <td><a class="btn btn-danger" href="{{ path('admin_delete_author', {'authorId': aut.id}) }}">Delete</a></td>
                             <td><a class="btn btn-warning" href="{{ path('admin_update_author', {'authorId': aut.id}) }}">Update</a></td>

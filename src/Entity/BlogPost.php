@@ -72,6 +72,7 @@ class BlogPost
      */
     private $updatedAt;
 
+
     /**
      * @Assert\File(mimeTypes={"image/jpeg", "image/png"})
      * @ORM\Column(name="imgUploaded", type="string")
