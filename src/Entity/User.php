@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @UniqueEntity(fields="email", message="Cet email est déjà enregistré en base.")
  * @UniqueEntity(fields="username", message="Cet identifiant est déjà enregistré en base")
  */
-class User implements UserInterface, \Serializable
+class User implements UserInterface
 {
     /**
      * @ORM\Column(type="integer")
@@ -45,9 +45,9 @@ class User implements UserInterface, \Serializable
     private $email;
 
     /**
-     * @ORM\Column(name="is_active", type="boolean")
+     * @ORM\Column(name="active", type="boolean")
      */
-    private $isActive;
+    private $active;
 
     /**
      * @var array
@@ -77,7 +77,7 @@ class User implements UserInterface, \Serializable
 
     public function __construct()
     {
-        $this->isActive = true;
+        $this->active = true;
         $this->roles = ['ROLE_USER'];
     }
 
@@ -125,14 +125,14 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    public function getIsActive()
+    public function isActive()
     {
-        return $this->isActive;
+        return $this->active;
     }
 
-    public function setIsActive($isActive)
+    public function setActive($active)
     {
-        $this->isActive = $isActive;
+        $this->active = $active;
 
         return $this;
     }
@@ -211,28 +211,5 @@ class User implements UserInterface, \Serializable
     public function setCsrfToken(string $csrf_token): void
     {
         $this->csrf_token = $csrf_token;
-    }
-
-    public function serialize()
-    {
-        return \serialize([
-            $this->id,
-            $this->username,
-            $this->email,
-            $this->salt,
-            $this->password,
-            $this->isActive,
-        ]);
-    }
-
-    public function unserialize($serialized): void
-    {
-        list(
-            $this->id,
-            $this->username,
-            $this->email,
-            $this->salt,
-            $this->password,
-            $this->isActive) = \unserialize($serialized, ['allowed_classes' => false]);
     }
 }

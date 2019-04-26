@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use App\Repository\BlogPostRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -13,14 +12,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  * BlogPost.
  *
  * @ORM\Table(name="blog_post")
- * @ORM\Entity(repositoryClass=BlogPostRepository::class)
+ * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
  */
 class BlogPost
 {
     /**
      * @var int
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -57,7 +55,6 @@ class BlogPost
 
     /**
      * @var Author
-     *
      * @ORM\ManyToOne(targetEntity="Author", fetch="EAGER")
      * @ORM\JoinColumn(name="author_id", referencedColumnName="id")
      */
@@ -65,14 +62,12 @@ class BlogPost
 
     /**
      * @var \DateTime
-     *
      * @ORM\Column(name="created_at", type="datetimetz")
      */
     private $createdAt;
 
     /**
      * @var \DateTime
-     *
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
