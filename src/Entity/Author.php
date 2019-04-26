@@ -63,7 +63,9 @@ class Author
     /**
      * @var string
      * @Assert\NotBlank
-     * @ORM\Column(name="phone", type="string", length=255, nullable=true)
+     * @Assert\Length(min=10, max=20, minMessage="min_length", maxMessage="max_length")
+     * @Assert\Regex(pattern="/^\(0\)[0-9]*$")
+     * @ORM\Column(name="phone", type="integer", nullable=true)
      */
     private $phone;
 
