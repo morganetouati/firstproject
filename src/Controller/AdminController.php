@@ -8,8 +8,9 @@ use App\Entity\Author;
 use App\Entity\BlogPost;
 use App\Form\AuthorFormType;
 use App\Form\EntryFormType;
+use App\Repository\AuthorRepository;
+use App\Repository\BlogPostRepository;
 use App\Service\ImgUploader;
-use Doctrine\Common\Persistence\ObjectRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,19 +23,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminController extends AbstractController
 {
     /**
-     * @var ObjectRepository
+     * @var AuthorRepository
      */
     private $authorRepository;
 
     /**
-     * @var ObjectRepository
+     * @var BlogPostRepository
      */
     private $blogPostRepository;
 
-    public function __construct(RegistryInterface $registry)
+    public function __construct(RegistryInterface $registry, BlogPostRepository $blogPostRepository, AuthorRepository $authorRepository)
     {
-        $this->blogPostRepository = $registry->getEntityManagerForClass(BlogPost::class)->getRepository(BlogPost::class);
-        $this->authorRepository = $registry->getEntityManagerForClass(Author::class)->getRepository(Author::class);
+        $this->blogPostRepository = $blogPostRepository;
+        $this->authorRepository = $authorRepository;
     }
 
     /**
@@ -99,20 +100,23 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/", name="admin_index")
-     * @Route("/entries", name="admin_entries")
+     * @Route("/list_author", name="list_author")
      */
     public function entriesAction()
     {
-        $author = $this->authorRepository->findOneByUsername($this->getUser()->getUserName());
+    /*    $author = $this->authorRepository->findOneByUsername($this->getUser()->getUserName());
         $blogPosts = [];
         if ($author) {
-            $blogPosts = $this->blogPostRepository->findByAuthor($author);
+            $blogPosts = $this->blogPostRepository->findByAuthor('author');
         }
 
         return $this->render('admin/entries.html.twig', [
             'blogPosts' => $blogPosts,
-        ]);
+        ]);*/
+
+
+        return $this->render('admin/list_author.twig', [
+            'author' => $this->authorRepository->getAllAuthor()]);
     }
 
     /**

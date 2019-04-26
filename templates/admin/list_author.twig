@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="blog-header">
+            <h1 class="blog-title">List author</h1>
+            <p class="lead blog-description"></p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-lg-12 col-xl-12">
+                {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ label }}" role="alert">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+
+            <div class="col-sm-12 blog-main">
+                <table class="table table-striped">
+                    <thead>
+                    <th>Name</th>
+                    <th>Title</th>
+                    <th>Username</th>
+                    <th>Bio</th>
+                    <th>phone</th>
+                    <th>Facebook</th>
+                    <th>Twitter/th>
+                    <th>GitHub</th>
+                    <th>Company</th>
+                    </thead>
+                    {% for aut in author %}
+                        <tr>
+                            <td>{{ aut.name }}</td>
+                            <td>{{ aut.title }}</td>
+                            <td>{{ aut.username}}</td>
+                            <td>{{ aut.shortBio }}</td>
+                            <td>{{ aut.phone }}</td>
+                            <td>{{ aut.facebook}}</td>
+                            <td>{{ aut.twitter}}</td>
+                            <td>{{ aut.github}}</td>
+                            <td>{{ aut.company}}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5">No entries available</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

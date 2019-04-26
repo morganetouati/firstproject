@@ -65,27 +65,24 @@ class Author
      * @Assert\NotBlank
      * @Assert\Length(min=10, max=20, minMessage="min_length", maxMessage="max_length")
      * @Assert\Regex(pattern="/^\(0\)[0-9]*$")
-     * @ORM\Column(name="phone", type="integer", nullable=true)
+     * @ORM\Column(name="phone", type="string", length=10, nullable=true)
      */
     private $phone;
 
     /**
      * @var string
-     * @Assert\NotBlank
      * @ORM\Column(name="facebook", type="string", length=255, nullable=true)
      */
     private $facebook;
 
     /**
      * @var string
-     * @Assert\NotBlank
      * @ORM\Column(name="twitter", type="string", length=255, nullable=true)
      */
     private $twitter;
 
     /**
      * @var string
-     * @Assert\NotBlank
      * @ORM\Column(name="github", type="string", length=255, nullable=true)
      */
     private $github;

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Author;
-use App\Entity\BlogPost;
-use Doctrine\Common\Persistence\ObjectRepository;
+use App\Repository\AuthorRepository;
+use App\Repository\BlogPostRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,19 +18,19 @@ class BlogController extends AbstractController
     const POST_LIMIT = 5;
 
     /**
-     * @var ObjectRepository
+     * @var AuthorRepository
      */
     private $authorRepository;
 
     /**
-     * @var ObjectRepository
+     * @var BlogPostRepository
      */
     private $blogPostRepository;
 
-    public function __construct(RegistryInterface $registry)
+    public function __construct(RegistryInterface $registry, BlogPostRepository $blogPostRepository, AuthorRepository $authorRepository)
     {
-        $this->blogPostRepository = $registry->getEntityManagerForClass(BlogPost::class)->getRepository(BlogPost::class);
-        $this->authorRepository = $registry->getEntityManagerForClass(Author::class)->getRepository(Author::class); // getManagerForClass
+        $this->blogPostRepository = $blogPostRepository;
+        $this->authorRepository = $authorRepository;
     }
 
     /**
@@ -55,7 +55,7 @@ class BlogController extends AbstractController
     /**
      * @Route("/entry/{slug}", name="entry")
      */
-    public function entryAction($slug)
+    public function entryAction(String $slug)
     {
         $blogPost = $this->blogPostRepository->findOneBySlug($slug);
         if (!$blogPost) {
