@@ -208,9 +208,7 @@ class AdminController extends AbstractController
     public function deleteEntryAction($entryId, RegistryInterface $registry): Response
     {
         $entry = $this->getDoctrine()->getRepository(BlogPost::class)->find($entryId);
-        $em = $this->getDoctrine()->getManager();
-        $blogPost = $this->blogPostRepository->findByAuthor($entryId);
-        $this->em->remove($entryId);
+        $this->em->remove($entry);
         $this->em->flush();
         $this->addFlash('success', 'Entry was deleted!');
         return $this->redirectToRoute('admin_entries');

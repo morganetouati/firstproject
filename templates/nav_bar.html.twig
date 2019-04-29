@@ -5,8 +5,8 @@
                 <li><a href="{{ path("homepage") }}">Home</a></li>
             {% endif %}
             {% if is_granted('ROLE_ADMIN')%}
-                <li><a href="{{ path("admin_create_entry") }}">create article</a></li>
-                <li><a href="{{ path("admin_index") }}">Admin</a></li>
+                <li><a href="{{ path("admin_create_entry") }}">Create article</a></li>
+                <li><a href="{{ path("admin_entries") }}">List article</a></li>
                 <li><a href="{{ path("list_author") }}">List author</a></li>
                 <li><a href="{{ path("author_create") }}">Create author</a></li>
                 <li><a href="{{ path('logout') }}">Logout</a></li>
