@@ -57,7 +57,7 @@ class Author
      * @var string
      * @Assert\NotBlank
      * @Assert\Length(min=10, max=20, minMessage="min_length", maxMessage="max_length")
-     * @Assert\Regex(pattern="/^0[0-9]{9}$/")
+     * @Assert\Regex(pattern="/^(0|\+33)[1-9]([-. ]?[0-9]{2}){4}$/")
      * @ORM\Column(name="phone", type="string", length=10, nullable=true)
      */
     private $phone;

@@ -35,34 +35,3 @@
         </ul>
     </div>
 </nav>
-
-
-{#<nav class="navbar navbar-default">#}
-    {#    <div id="navbar" class="collapse navbar-collapse pull-right">#}
-{#    <div class="nav navbar-nav">#}
-{#        {% if app.request.get('_route') not in ['homepage', 'entries'] %}#}
-{#            <li><a href="{{ path("homepage") }}">Home</a></li>#}
-{#        {% endif %}#}
-{#        {% if is_granted('ROLE_ADMIN') %}#}
-{#        <div class="dropdown show">#}
-{#            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"#}
-{#               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
-{#                Dropdown link#}
-{#            </a>#}
-
-{#            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">#}
-{#                <li><a href="{{ path("admin_create_entry") }}">Create article</a></li>#}
-{#                <li><a href="{{ path("admin_entries") }}">List article</a></li>#}
-{#                <li><a href="{{ path("list_author") }}">List author</a></li>#}
-{#                <li><a href="{{ path("author_create") }}">Create author</a></li>#}
-{#                <li><a href="{{ path('logout') }}">Logout</a></li>#}
-{#                {% elseif is_granted('ROLE_USER') %}#}
-{#                    <li><a href="{{ path('logout') }}">Logout</a></li>#}
-{#                {% else %}#}
-{#                    <li><a href="{{ path('login') }}">Login</a></li>#}
-{#                    <li><a href="{{ path('register') }}">Registration</a></li>#}
-{#                {% endif %}#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
-{#</nav>#}
