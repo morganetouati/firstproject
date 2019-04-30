@@ -12,7 +12,7 @@
                     {% set firstParagraph = paragraphs|first ~ '</p>' %}
                     <div class="blog-post">
                         <h2 class="blog-post-title">
-                            <a href="{{ path('entry', {'slug': blogPost.slug}) }}">
+                            <a href="{{ path('article', {'slug': blogPost.slug}) }}">
                                 {{ blogPost.title }}
                             </a>
                         </h2>
@@ -28,7 +28,7 @@
                             {% endif %}
                         </p>
                         {{ firstParagraph|raw }}<br/>
-                        <a href="{{ path('entry', {'slug': blogPost.slug}) }}">Read More</a>
+                        <a href="{{ path('article', {'slug': blogPost.slug}) }}">Read More</a>
                     </div>
                 {% else %}
                     <div class="alert alert-danger" role="alert">
@@ -39,16 +39,16 @@
                 {% endfor %}
 
                 {% set canPrevious = page > 1 %}
-                {% set canNext = (page * entryLimit) < totalBlogPosts %}
+                {% set canNext = (page * articleLimit) < totalBlogPosts %}
                 <nav>
                     <ul class="pager">
                         <li class="previous {% if canPrevious == false %}disabled{% endif %}">
-                            <a href="{% if canPrevious %}{{ path('entries', {'page': page - 1}) }}{% endif %}">
+                            <a href="{% if canPrevious %}{{ path('articles', {'page': page - 1}) }}{% endif %}">
                                 <span aria-hidden="true">&larr;</span> Older
                             </a>
                         </li>
                         <li class="next {% if canNext == false %}disabled{% endif %}">
-                            <a href="{% if canNext %}{{ path('entries', {'page': page + 1}) }}{% endif %}">
+                            <a href="{% if canNext %}{{ path('articles', {'page': page + 1}) }}{% endif %}">
                                 Newer <span aria-hidden="true">&rarr;</span>
                             </a>
                         </li>

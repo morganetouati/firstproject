@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use App\Repository\AuthorRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -150,6 +149,7 @@ class Author
 
     /**
      * Get firstname.
+     *
      * @return string
      */
     public function getFirstname()
@@ -158,13 +158,16 @@ class Author
     }
 
     /**
-     * Set $firstname
+     * Set $firstname.
+     *
      * @param string $firstname
+     *
      * @return Author
      */
     public function setFirstname($firstname)
     {
         $this->firstname = $firstname;
+
         return $this;
     }
 

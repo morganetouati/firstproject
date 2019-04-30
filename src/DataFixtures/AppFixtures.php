@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\DataFixtures;
 
+use App\Entity\Article;
 use App\Entity\Author;
-use App\Entity\BlogPost;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -36,7 +36,7 @@ class AppFixtures extends Fixture
             ->setEmail('test@test.com');
         $manager->persist($author);
 
-        $blogPost = new BlogPost();
+        $blogPost = new Article();
         $blogPost
             ->setTitle('Your first blog post example')
             ->setSlug('first-post')

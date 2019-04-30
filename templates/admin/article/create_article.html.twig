@@ -5,22 +5,19 @@
 {% block body %}
     <div class="container">
         <div class="blog-header">
-            <h2 class="blog-title">Create an Author</h2>
+            <h2 class="blog-title">Create an article</h2>
         </div>
 
         <div class="row">
-            <div class="col-md-12 col-lg-12 col-xl-12">
+            <div class="col-sm-12 blog-main">
                 {% for label, messages in app.flashes %}
                     {% for message in messages %}
-                        <div class="alert alert-{{ label }}" role="alert">
-                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <div class="bg-{{ label }}">
                             {{ message }}
                         </div>
                     {% endfor %}
                 {% endfor %}
-            </div>
-            <div class="col-sm-12 blog-main">
-                {{ form(form) }}
+               {{ form(form) }}
             </div>
         </div>
     </div>

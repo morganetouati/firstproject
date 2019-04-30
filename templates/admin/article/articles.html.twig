@@ -1,0 +1,62 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    <div class="container">
+        <div class="blog-header">
+            <h1 class="blog-title">Blog tutorial</h1>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-8 blog-main">
+                {% for blogPost in blogPosts %}
+                    {% set paragraphs = blogPost.description|split('</p>') %}
+                    {% set firstParagraph = paragraphs|first ~ '</p>' %}
+                    <div class="blog-post">
+                        <h2 class="blog-post-title">
+                            <a href="{{ path('article', {'slug': blogPost.slug}) }}">
+                                {{ blogPost.title }}
+                            </a>
+                        </h2>
+                        <p class="blog-post-meta">
+                            {{ blogPost.getUpdatedAt|date('F j, Y') }} by
+
+                            {% if blogPost.author %}
+                                <a href="{{ path('author', {'authorId': blogPost.author.id }) }}">
+                                    {{ blogPost.author.lastname }}
+                                </a>
+                            {% else %}
+                                Unknown Author
+                            {% endif %}
+                        </p>
+                        {{ firstParagraph|raw }}<br/>
+                        <a href="{{ path('article', {'slug': blogPost.slug}) }}">Read More</a>
+                        <td><a class="btn btn-danger" href="{{ path('admin_delete_article', {'articleId': blogPost.id}) }}">Delete</a></td>
+                        <td><a class="btn btn-warning" href="{{ path('admin_update_article', {'articleId': blogPost.id}) }}">Update</a></td>
+                    </div>
+                {% else %}
+                    <div class="alert alert-danger" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Error:</span>
+                        You have no blog articles. Please log in and create an article.
+                    </div>
+                {% endfor %}
+
+                {% set canPrevious = page > 1 %}
+                {% set canNext = (page * articleLimit) < totalBlogPosts %}
+                <nav>
+                    <ul class="pager">
+                        <li class="previous {% if canPrevious == false %}disabled{% endif %}">
+                            <a href="{% if canPrevious %}{{ path('admin_articles', {'page': page - 1}) }}{% endif %}">
+                                <span aria-hidden="true">&larr;</span> Older
+                            </a>
+                        </li>
+                        <li class="next {% if canNext == false %}disabled{% endif %}">
+                            <a href="{% if canNext %}{{ path('admin_articles', {'page': page + 1}) }}{% endif %}">
+                                Newer <span aria-hidden="true">&rarr;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+{% endblock %}

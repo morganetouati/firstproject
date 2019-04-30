@@ -15,9 +15,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AuthorFormType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -37,13 +34,13 @@ class AuthorFormType extends AbstractType
             )
             ->add(
                 'firstname',
-                TextType::class,[
-                    'attr' => ['class' => 'form-control']
+                TextType::class, [
+                    'attr' => ['class' => 'form-control'],
                 ]
             )
             ->add(
                 'email',
-                EmailType::class,[
+                EmailType::class, [
                     'attr' => ['class' => 'form-control'],
                 ]
             )
@@ -104,9 +101,6 @@ class AuthorFormType extends AbstractType
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -114,9 +108,6 @@ class AuthorFormType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName()
     {
         return 'author_form';

@@ -9,13 +9,13 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * BlogPost.
+ * Article.
  *
  * @ORM\Table(name="blog_post")
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
  */
-class BlogPost
+class Article
 {
     /**
      * @var int
@@ -72,7 +72,6 @@ class BlogPost
      */
     private $updatedAt;
 
-
     /**
      * @Assert\File(mimeTypes={"image/jpeg", "image/png"})
      * @ORM\Column(name="imgUploaded", type="string")
@@ -94,7 +93,7 @@ class BlogPost
      *
      * @param string $title
      *
-     * @return BlogPost
+     * @return Article
      */
     public function setTitle($title)
     {
@@ -118,7 +117,7 @@ class BlogPost
      *
      * @param string $slug
      *
-     * @return BlogPost
+     * @return Article
      */
     public function setSlug($slug)
     {
@@ -142,7 +141,7 @@ class BlogPost
      *
      * @param string $description
      *
-     * @return BlogPost
+     * @return Article
      */
     public function setDescription($description)
     {
@@ -166,7 +165,7 @@ class BlogPost
      *
      * @param string $body
      *
-     * @return BlogPost
+     * @return Article
      */
     public function setBody($body)
     {
@@ -190,7 +189,7 @@ class BlogPost
      *
      * @param Author $author
      *
-     * @return BlogPost
+     * @return Article
      */
     public function setAuthor(Author $author)
     {
@@ -214,7 +213,7 @@ class BlogPost
      *
      * @param \DateTime $createdAt
      *
-     * @return BlogPost
+     * @return Article
      */
     public function setCreatedAt($createdAt)
     {
@@ -238,7 +237,7 @@ class BlogPost
      *
      * @param \DateTime $updatedAt
      *
-     * @return BlogPost
+     * @return Article
      */
     public function setUpdatedAt($updatedAt)
     {

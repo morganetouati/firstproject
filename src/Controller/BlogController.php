@@ -35,35 +35,36 @@ class BlogController extends AbstractController
 
     /**
      * @Route("/", name="homepage")
-     * @Route("/entries", name="entries")
+     * @Route("/articles", name="articles")
      */
-    public function entriesAction(Request $request)
+    public function articlesAction(Request $request)
     {
         $page = 1;
         if ($request->get('page')) {
             $page = $request->get('page');
         }
 
-        return $this->render('blog/entries.html.twig', [
+        return $this->render('blog/articles.html.twig', [
             'blogPosts' => $this->blogPostRepository->getAllPosts($page, self::POST_LIMIT),
             'totalBlogPosts' => $this->blogPostRepository->getPostCount(),
             'page' => $page,
-            'entryLimit' => self::POST_LIMIT,
+            'articleLimit' => self::POST_LIMIT,
         ]);
     }
 
     /**
-     * @Route("/entry/{slug}", name="entry")
+     * @Route("/article/{slug}", name="article")
      */
-    public function entryAction(String $slug)
+    public function articleAction(String $slug)
     {
         $blogPost = $this->blogPostRepository->findOneBySlug($slug);
         if (!$blogPost) {
-            $this->addFlash('error', 'Unable to find entry!');
+            $this->addFlash('error', 'Unable to find article!');
 
-            return $this->redirectToRoute('entries');
+            return $this->redirectToRoute('articles');
         }
-        return $this->render('blog/entry.html.twig', [
+
+        return $this->render('blog/article.html.twig', [
             'blogPost' => $blogPost,
         ]);
     }
@@ -78,8 +79,9 @@ class BlogController extends AbstractController
         if (!$author) {
             $this->addFlash('error', 'Unable to find author!');
 
-            return $this->redirectToRoute('entries');
+            return $this->redirectToRoute('articles');
         }
+
         return $this->render('blog/author.html.twig', [
             'author' => $author,
         ]);

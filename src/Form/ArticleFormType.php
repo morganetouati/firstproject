@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Form;
 
+use App\Entity\Article;
 use App\Entity\Author;
-use App\Entity\BlogPost;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -16,7 +16,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class EntryFormType extends AbstractType
+class ArticleFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -50,7 +50,7 @@ class EntryFormType extends AbstractType
             ->add('imgUploaded', FileType::class,
                 ['label' => 'Image(jpg, jpeg, png allowed)',
                     'attr' => ['class' => 'form-control'],
-                    'data_class' => null
+                    'data_class' => null,
                 ]
             )
             ->add('author', EntityType::class, [
@@ -69,13 +69,10 @@ class EntryFormType extends AbstractType
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => BlogPost::class,
+            'data_class' => Article::class,
         ]);
     }
 }

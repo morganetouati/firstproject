@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\Article;
 use App\Entity\Author;
-use App\Entity\BlogPost;
+use App\Form\ArticleFormType;
 use App\Form\AuthorFormType;
-use App\Form\EntryFormType;
 use App\Repository\AuthorRepository;
 use App\Repository\BlogPostRepository;
 use App\Service\ImgUploader;
@@ -59,37 +59,40 @@ class AdminController extends AbstractController
 
             $request->getSession()->set('user_is_author', true);
             $this->addFlash('success', 'Congratulations! You are now an author.');
+
             return $this->redirectToRoute('list_author');
         }
 
         return $this->render('admin/author/create_author.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/create-entry", name="admin_create_entry")
+     * @Route("/create_article", name="admin_create_article")
+     *
      * @param Request $request
      */
     public function createEntryAction(Request $request, RegistryInterface $registry, ImgUploader $imgUploader): Response
     {
-        $blogPost = new BlogPost();
-        $form = $this->createForm(EntryFormType::class, $blogPost);
+        $blogPost = new Article();
+        $form = $this->createForm(ArticleFormType::class, $blogPost);
         $form->handleRequest($request);
 
         // Check is valid
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($imgUploader !== null) {
+            if (null !== $imgUploader) {
                 $blogPost->setImgUploaded($imgUploader->upload($blogPost->getImgUploaded()));
             }
-            $em = $registry->getEntityManagerForClass(BlogPost::class);
+            $em = $registry->getEntityManagerForClass(Article::class);
             $em->persist($blogPost);
             $em->flush();
             $this->addFlash('success', 'Congratulations! Your post is created');
-            return $this->redirectToRoute('entries');
+
+            return $this->redirectToRoute('articles');
         }
 
-        return $this->render('admin/article/entry_form.html.twig', [
+        return $this->render('admin/article/create_article.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -100,13 +103,14 @@ class AdminController extends AbstractController
     public function authorAction()
     {
         return $this->render('admin/author/list_author.twig', [
-            'author' => $this->authorRepository->getAllAuthor()]);
+            'author' => $this->authorRepository->getAllAuthor(), ]);
     }
-
 
     /**
      * @Route("/delete-author/{authorId}", name="admin_delete_author")
+     *
      * @param $authorId
+     *
      * @return /Response
      */
     public function deleteAuthorAction($authorId): Response
@@ -122,7 +126,9 @@ class AdminController extends AbstractController
 
     /**
      * @Route("/update-author/{authorId}", name="admin_update_author")
+     *
      * @param $authorId
+     *
      * @return /Response
      */
     public function updateAuthorAction(Author $authorId, Request $request, EntityManagerInterface $em): Response
@@ -130,85 +136,95 @@ class AdminController extends AbstractController
         $author = $this->getDoctrine()->getRepository(Author::class)->find($authorId);
         $form = $this->createForm(AuthorFormType::class, $author);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             $this->addFlash('success', 'Actor was updated!');
+
             return $this->redirectToRoute('list_author');
         }
+
         return $this->render(
             'admin/author/update_author.html.twig', ['form' => $form->createView()]);
     }
 
     /**
-     * @Route("/entries", name="admin_entries")
+     * @Route("/articles", name="admin_articles")
      */
-    public function entriesAction(Request $request)
+    public function articlesAction(Request $request)
     {
         $page = 1;
         if ($request->get('page')) {
             $page = $request->get('page');
         }
 
-        return $this->render('admin/article/entries.html.twig', [
+        return $this->render('admin/article/articles.html.twig', [
             'blogPosts' => $this->blogPostRepository->getAllPosts($page, self::POST_LIMIT),
             'totalBlogPosts' => $this->blogPostRepository->getPostCount(),
             'page' => $page,
-            'entryLimit' => self::POST_LIMIT,
+            'articleLimit' => self::POST_LIMIT,
         ]);
     }
 
     /**
-     * @Route("/entry/{slug}", name="entry")
+     * @Route("/article/{slug}", name="article")
      */
-    public function entryAction(String $slug)
+    public function articleAction(String $slug)
     {
         $blogPost = $this->blogPostRepository->findOneBySlug($slug);
         if (!$blogPost) {
-            $this->addFlash('error', 'Unable to find entry!');
+            $this->addFlash('error', 'Unable to find article!');
 
-            return $this->redirectToRoute('admin_entries');
+            return $this->redirectToRoute('admin_articles');
         }
-        return $this->render('blog/entry.html.twig', [
+
+        return $this->render('blog/article.html.twig', [
             'blogPost' => $blogPost,
         ]);
     }
 
     /**
-     * @Route("/update-entry/{entryId}", name="admin_update_entry")
-     * @param BlogPost $entryId
-     * @param Request $request
+     * @Route("/update-article/{articleId}", name="admin_update_article")
+     *
+     * @param Article                $articleId
+     * @param Request                $request
      * @param EntityManagerInterface $em
+     *
      * @return Response
      */
-    public function updateEntryAction(BlogPost $entryId, Request $request, EntityManagerInterface $em, ImgUploader $imgUploader): Response
+    public function updateArticleAction(Article $articleId, Request $request, EntityManagerInterface $em, ImgUploader $imgUploader): Response
     {
-        $entry = $this->getDoctrine()->getRepository(BlogPost::class)->find($entryId);
-        $form = $this->createForm(EntryFormType::class, $entry);
+        $article = $this->getDoctrine()->getRepository(Article::class)->find($articleId);
+        $form = $this->createForm(ArticleFormType::class, $article);
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
-            if ($imgUploader !== null) {
-                $entry->setImgUploaded($imgUploader->upload($entry->getImgUploaded()));
+        if ($form->isSubmitted() && $form->isValid()) {
+            if (null !== $imgUploader) {
+                $article->setImgUploaded($imgUploader->upload($article->getImgUploaded()));
             }
             $em = $this->getDoctrine()->getManager();
             $em->flush();
-            $this->addFlash('success', 'Entry was updated');
-            return $this->redirectToRoute('admin_entries');
+            $this->addFlash('success', 'Article was updated');
+
+            return $this->redirectToRoute('admin_articles');
         }
-        return $this->render('admin/article/update_entry.html.twig', ['form' => $form->createView()]);
+
+        return $this->render('admin/article/update_article.html.twig', ['form' => $form->createView()]);
     }
 
     /**
-     * @Route("/delete-entry/{entryId}", name="admin_delete_entry")
-     * @param $entryId
+     * @Route("/delete-article/{articleId}", name="admin_delete_article")
+     *
+     * @param $articleId
+     *
      * @return /Response
      */
-    public function deleteEntryAction($entryId, RegistryInterface $registry): Response
+    public function deleteArticleAction($articleId, RegistryInterface $registry): Response
     {
-        $entry = $this->getDoctrine()->getRepository(BlogPost::class)->find($entryId);
-        $this->em->remove($entry);
+        $article = $this->getDoctrine()->getRepository(Article::class)->find($articleId);
+        $this->em->remove($article);
         $this->em->flush();
-        $this->addFlash('success', 'Entry was deleted!');
-        return $this->redirectToRoute('admin_entries');
+        $this->addFlash('success', 'Article was deleted!');
+
+        return $this->redirectToRoute('admin_articles');
     }
 }

@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-md navbar-inverse bg-faded">
     <div class="collapse navbar-collapse" id="nav-content">
         <ul class="nav navbar-nav">
-            {% if app.request.get('_route') not in ['homepage', 'entries'] %}
+            {% if app.request.get('_route') not in ['homepage', 'articles'] %}
                 <li><a href="{{ path("homepage") }}">Home</a></li>
             {% endif %}
             {% if is_granted('ROLE_ADMIN') %}
@@ -10,8 +10,8 @@
                        aria-haspopup="true"
                        aria-expanded="false">Article</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{{ path("admin_create_entry") }}">Create article</a>
-                        <a class="dropdown-item" href="{{ path("admin_entries") }}">List articles</a>
+                        <a class="dropdown-item" href="{{ path("admin_create_article") }}">Create article</a>
+                        <a class="dropdown-item" href="{{ path("admin_articles") }}">List articles</a>
                     </div>
                 </li>
 

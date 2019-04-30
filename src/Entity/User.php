@@ -114,7 +114,7 @@ class User implements UserInterface
     }
 
     /**
-     * Get email
+     * Get email.
      */
     public function getEmail()
     {
