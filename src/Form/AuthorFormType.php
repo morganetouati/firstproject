@@ -37,13 +37,13 @@ class AuthorFormType extends AbstractType
             )
             ->add(
                 'firstname',
-                TextType::class,[
-                    'attr' => ['class' => 'form-control']
+                TextType::class, [
+                    'attr' => ['class' => 'form-control'],
                 ]
             )
             ->add(
                 'email',
-                EmailType::class,[
+                EmailType::class, [
                     'attr' => ['class' => 'form-control'],
                 ]
             )

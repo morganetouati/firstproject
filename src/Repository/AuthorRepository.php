@@ -33,7 +33,8 @@ class AuthorRepository
         return $this->entityManager->getRepository(Author::class)->find($authorId);
     }
 
-    public function findOneByLastname($lastname){
+    public function findOneByLastname($lastname)
+    {
         return $this->entityManager->getRepository(Author::class)->find($lastname);
     }
 

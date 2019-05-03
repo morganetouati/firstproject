@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\ResettingType;
+use App\Form\ForgotPasswordFormType;
 use App\Service\Mailer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -50,7 +50,7 @@ class ResettingController extends AbstractController
             $user->setPasswordRequestedAt(new \DateTime());
             $em->flush();
 
-            $bodyMail = $mailer->createBodyMail('resetting/mail.html.twig', [
+            $bodyMail = $mailer->createBodyMail('forgot_password/mail.html.twig', [
                'user' => $user,
             ]);
             $mailer->sendMessage('from@email.com', $user->getEmail(), 'renewal of password', $bodyMail);
@@ -59,7 +59,7 @@ class ResettingController extends AbstractController
             return $this->redirectToRoute('login');
         }
 
-        return $this->render('resetting/request.html.twig', ['form' => $form->createView()]);
+        return $this->render('forgot_password/request.html.twig', ['form' => $form->createView()]);
     }
 
     private function isRequestInTime(\DateTime $passwordRequestedAt = null)
@@ -76,7 +76,7 @@ class ResettingController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/{token}", name="resetting")
+     * @Route("/{id}/{token}", name="forgot_password")
      *
      * @param User $user
      * @param $token
@@ -88,7 +88,7 @@ class ResettingController extends AbstractController
         if (null === $user->getToken() || $token !== $user->getToken() || !$this->isRequestInTime($user->getPasswordRequestedAt())) {
             throw new AccessDeniedException();
         }
-        $form = $this->createForm(ResettingType::class, $user);
+        $form = $this->createForm(ForgotPasswordFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -104,6 +104,6 @@ class ResettingController extends AbstractController
             return $this->redirectToRoute('login');
         }
 
-        return $this->render('resetting/index.html.twig', ['form' => $form->createView()]);
+        return $this->render('resetting/forgotten_password.html.twig', ['form' => $form->createView()]);
     }
 }

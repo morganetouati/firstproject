@@ -50,7 +50,7 @@ class EntryFormType extends AbstractType
             ->add('imgUploaded', FileType::class,
                 ['label' => 'Image(jpg, jpeg, png allowed)',
                     'attr' => ['class' => 'form-control'],
-                    'data_class' => null
+                    'data_class' => null,
                 ]
             )
             ->add('author', EntityType::class, [

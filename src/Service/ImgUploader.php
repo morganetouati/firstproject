@@ -20,8 +20,9 @@ class ImgUploader
 
     public function upload(UploadedFile $img)
     {
-        $imgName = md5(uniqid('', true)) . '.' . $img->guessExtension();
+        $imgName = \md5(\uniqid('', true)) . '.' . $img->guessExtension();
         $img->move($this->targetDirectory, $imgName);
+
         return $imgName;
     }
 }

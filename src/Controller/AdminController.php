@@ -59,16 +59,18 @@ class AdminController extends AbstractController
 
             $request->getSession()->set('user_is_author', true);
             $this->addFlash('success', 'Congratulations! You are now an author.');
+
             return $this->redirectToRoute('list_author');
         }
 
         return $this->render('admin/author/create_author.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 
     /**
      * @Route("/create-entry", name="admin_create_entry")
+     *
      * @param Request $request
      */
     public function createEntryAction(Request $request, RegistryInterface $registry, ImgUploader $imgUploader): Response
@@ -79,13 +81,14 @@ class AdminController extends AbstractController
 
         // Check is valid
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($imgUploader !== null) {
+            if (null !== $imgUploader) {
                 $blogPost->setImgUploaded($imgUploader->upload($blogPost->getImgUploaded()));
             }
             $em = $registry->getEntityManagerForClass(BlogPost::class);
             $em->persist($blogPost);
             $em->flush();
             $this->addFlash('success', 'Congratulations! Your post is created');
+
             return $this->redirectToRoute('entries');
         }
 
@@ -100,13 +103,14 @@ class AdminController extends AbstractController
     public function authorAction()
     {
         return $this->render('admin/author/list_author.twig', [
-            'author' => $this->authorRepository->getAllAuthor()]);
+            'author' => $this->authorRepository->getAllAuthor(), ]);
     }
-
 
     /**
      * @Route("/delete-author/{authorId}", name="admin_delete_author")
+     *
      * @param $authorId
+     *
      * @return /Response
      */
     public function deleteAuthorAction($authorId): Response
@@ -122,7 +126,9 @@ class AdminController extends AbstractController
 
     /**
      * @Route("/update-author/{authorId}", name="admin_update_author")
+     *
      * @param $authorId
+     *
      * @return /Response
      */
     public function updateAuthorAction(Author $authorId, Request $request, EntityManagerInterface $em): Response
@@ -130,12 +136,14 @@ class AdminController extends AbstractController
         $author = $this->getDoctrine()->getRepository(Author::class)->find($authorId);
         $form = $this->createForm(AuthorFormType::class, $author);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             $this->addFlash('success', 'Actor was updated!');
+
             return $this->redirectToRoute('list_author');
         }
+
         return $this->render(
             'admin/author/update_author.html.twig', ['form' => $form->createView()]);
     }
@@ -169,6 +177,7 @@ class AdminController extends AbstractController
 
             return $this->redirectToRoute('admin_entries');
         }
+
         return $this->render('blog/entry.html.twig', [
             'blogPost' => $blogPost,
         ]);
@@ -176,9 +185,11 @@ class AdminController extends AbstractController
 
     /**
      * @Route("/update-entry/{entryId}", name="admin_update_entry")
-     * @param BlogPost $entryId
-     * @param Request $request
+     *
+     * @param BlogPost               $entryId
+     * @param Request                $request
      * @param EntityManagerInterface $em
+     *
      * @return Response
      */
     public function updateEntryAction(BlogPost $entryId, Request $request, EntityManagerInterface $em, ImgUploader $imgUploader): Response
@@ -186,21 +197,25 @@ class AdminController extends AbstractController
         $entry = $this->getDoctrine()->getRepository(BlogPost::class)->find($entryId);
         $form = $this->createForm(EntryFormType::class, $entry);
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
-            if ($imgUploader !== null) {
+        if ($form->isSubmitted() && $form->isValid()) {
+            if (null !== $imgUploader) {
                 $entry->setImgUploaded($imgUploader->upload($entry->getImgUploaded()));
             }
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             $this->addFlash('success', 'Entry was updated');
+
             return $this->redirectToRoute('admin_entries');
         }
+
         return $this->render('admin/article/update_entry.html.twig', ['form' => $form->createView()]);
     }
 
     /**
      * @Route("/delete-entry/{entryId}", name="admin_delete_entry")
+     *
      * @param $entryId
+     *
      * @return /Response
      */
     public function deleteEntryAction($entryId, RegistryInterface $registry): Response
@@ -209,6 +224,7 @@ class AdminController extends AbstractController
         $this->em->remove($entry);
         $this->em->flush();
         $this->addFlash('success', 'Entry was deleted!');
+
         return $this->redirectToRoute('admin_entries');
     }
 }

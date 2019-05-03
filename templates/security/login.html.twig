@@ -1,6 +1,5 @@
 {% extends 'base.html.twig' %}
 {% block title %}Sign in{% endblock %}
-{#{% block navbar '' %}#}
 {% block body %}
     <h2>Login</h2>
     {% if error %}
@@ -24,6 +23,7 @@
             </div>
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
             <button class="btn btn-primary" type="submit">Sign in</button>
+            <a href="{{ path('forgot_password') }}">Forgot password ?</a>
         </form>
     </div>
 {% endblock %}

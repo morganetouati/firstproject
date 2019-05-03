@@ -44,6 +44,7 @@ class BlogPostRepository
     /**
      * @param int $page
      * @param int $limit
+     *
      * @return array
      */
     public function getAllPosts($page = 1, $limit = 5): array
