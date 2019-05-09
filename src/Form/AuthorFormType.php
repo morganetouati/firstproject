@@ -96,7 +96,7 @@ class AuthorFormType extends AbstractType
                 SubmitType::class,
                 [
                     'attr' => ['class' => 'form-control btn-primary pull-right'],
-                    'label' => 'Become an author!',
+                    'label' => 'Submit!',
                 ]
             );
     }

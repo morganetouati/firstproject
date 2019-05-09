@@ -13,24 +13,23 @@
         <div class="row">
             <div class="col-sm-8 blog-main">
                 <div class="blog-post">
-                    <h2 class="blog-post-title">{{ blogPost.title }}</h2>
+                    <h2 class="blog-post-title">{{ article.title }}</h2>
                     <p class="blog-post-meta">
-                        {{ blogPost.updatedAt|date('F j, Y') }} by
-                        {% dump(blogPost.author) %}
-                        {% if blogPost.author == null %}
+                        {{ article.updatedAt|date('F j, Y') }} by
+                        {% if article.author == null %}
                             Author Unknow
                         {% else %}
-                            <a href="{{ path('author', {'authorId': blogPost.author.id}) }}">
-                                {{ blogPost.author.lastname }}
+                            <a href="{{ path('authors', {'authorId': article.author.id}) }}">
+                                {{ article.author.lastname }}
                             </a>
                         {% endif %}
                     </p>
                     <h3>Description:</h3>
-                    <p>{{ blogPost.description|raw }}</p>
+                    <p>{{ article.description|raw }}</p>
 
                     <h3>Body:</h3>
-                    <p>{{ blogPost.body|raw }}</p>
-                    <img src="{{ asset('uploads/img/' ~ blogPost.imgUploaded) }}" alt="{{ blogPost.imgUploaded }}">
+                    <p>{{ article.body|raw }}</p>
+                    <img src="{{ asset('uploads/img/' ~ article.imgUploaded) }}" alt="{{ article.imgUploaded }}">
                 </div>
             </div>
         </div>

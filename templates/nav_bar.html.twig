@@ -10,8 +10,8 @@
                        aria-haspopup="true"
                        aria-expanded="false">Article</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{{ path("admin_create_article") }}">Create article</a>
-                        <a class="dropdown-item" href="{{ path("admin_articles") }}">List articles</a>
+                        <a class="dropdown-item" href="{{ path("new") }}">Create article</a>
+                        <a class="dropdown-item" href="{{ path("articles") }}">List articles</a>
                     </div>
                 </li>
 
@@ -20,8 +20,8 @@
                        aria-haspopup="true"
                        aria-expanded="false">Author</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{{ path("list_author") }}">List author</a>
-                        <a class="dropdown-item" href="{{ path("author_create") }}">Create author</a>
+                        <a class="dropdown-item" href="{{ path("new-author") }}">Create author</a>
+                        <a class="dropdown-item" href="{{ path("authors") }}">List author</a>
                     </div>
                 </li>
             {% endif %}

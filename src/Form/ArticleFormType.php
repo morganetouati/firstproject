@@ -62,7 +62,7 @@ class ArticleFormType extends AbstractType
                 ]
             )
             ->add('create', SubmitType::class,
-                ['label' => 'Create',
+                ['label' => 'Submit',
                     'attr' => ['class' => 'form-control btn-primary pull-right'],
                 ]
             )

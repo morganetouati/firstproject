@@ -7,7 +7,7 @@ namespace App\Repository;
 use App\Entity\Article;
 use Doctrine\ORM\EntityManagerInterface;
 
-class BlogPostRepository
+class ArticleRepository
 {
     /**
      * @var EntityManagerInterface

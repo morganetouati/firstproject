@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Article.
  *
- * @ORM\Table(name="blog_post")
+ * @ORM\Table(name="article")
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
  */
