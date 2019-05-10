@@ -9,8 +9,6 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Article.
- *
  * @ORM\Table(name="article")
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
@@ -18,7 +16,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Article
 {
     /**
-     * @var int
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -26,42 +23,36 @@ class Article
     private $id;
 
     /**
-     * @var string
      * @Assert\NotBlank
      * @ORM\Column(name="title", type="string", length=255)
      */
     private $title;
 
     /**
-     * @var string
      * @Assert\NotBlank
      * @ORM\Column(name="slug", type="string", length=255, unique=true)
      */
     private $slug;
 
     /**
-     * @var string
      * @Assert\NotBlank
      * @ORM\Column(name="description", type="string", length=2000)
      */
     private $description;
 
     /**
-     * @var string
      * @Assert\NotBlank
      * @ORM\Column(name="body", type="text")
      */
     private $body;
 
     /**
-     * @var Author
      * @ORM\ManyToOne(targetEntity="Author", fetch="EAGER")
      * @ORM\JoinColumn(name="author_id", referencedColumnName="id")
      */
     private $author;
 
     /**
-     * @var \DateTime
      * @ORM\Column(name="created_at", type="datetimetz")
      */
     private $createdAt;
@@ -78,119 +69,59 @@ class Article
      */
     private $imgUploaded;
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Set title.
-     *
-     * @param string $title
-     *
-     * @return Article
-     */
-    public function setTitle($title)
+    public function setTitle(string $title): self
     {
         $this->title = $title;
 
         return $this;
     }
 
-    /**
-     * Get title.
-     *
-     * @return string
-     */
-    public function getTitle()
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    /**
-     * Set slug.
-     *
-     * @param string $slug
-     *
-     * @return Article
-     */
-    public function setSlug($slug)
+    public function setSlug(string $slug): self
     {
         $this->slug = $slug;
 
         return $this;
     }
 
-    /**
-     * Get slug.
-     *
-     * @return string
-     */
-    public function getSlug()
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
 
-    /**
-     * Set description.
-     *
-     * @param string $description
-     *
-     * @return Article
-     */
-    public function setDescription($description)
+    public function setDescription(string $description): self
     {
         $this->description = $description;
 
         return $this;
     }
 
-    /**
-     * Get description.
-     *
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * Set body.
-     *
-     * @param string $body
-     *
-     * @return Article
-     */
-    public function setBody($body)
+    public function setBody(string $body): self
     {
         $this->body = $body;
 
         return $this;
     }
 
-    /**
-     * Get body.
-     *
-     * @return string
-     */
-    public function getBody()
+    public function getBody(): ?string
     {
         return $this->body;
     }
 
-    /**
-     * Set author.
-     *
-     * @param Author $author
-     *
-     * @return Article
-     */
     public function setAuthor(Author $author)
     {
         $this->author = $author;
@@ -198,60 +129,31 @@ class Article
         return $this;
     }
 
-    /**
-     * Get author.
-     *
-     * @return Author
-     */
     public function getAuthor()
     {
         return $this->author;
     }
 
-    /**
-     * Set createdAt.
-     *
-     * @param \DateTime $createdAt
-     *
-     * @return Article
-     */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    /**
-     * Get createdAt.
-     *
-     * @return \DateTime
-     */
-    public function getCreatedAt()
+    public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    /**
-     * Set updatedAt.
-     *
-     * @param \DateTime $updatedAt
-     *
-     * @return Article
-     */
-    public function setUpdatedAt($updatedAt)
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
-    /**
-     * Get updatedAt.
-     *
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
     }
@@ -261,13 +163,9 @@ class Article
         return $this->imgUploaded;
     }
 
-    /**
-     * @param string|File $imgUploaded
-     */
     public function setImgUploaded($imgUploaded)
     {
         $this->imgUploaded = $imgUploaded;
-
         return $this;
     }
 

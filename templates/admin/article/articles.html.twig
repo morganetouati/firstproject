@@ -20,7 +20,7 @@
                         <p class="blog-post-meta">
                             {{ article.getUpdatedAt|date('F j, Y') }} by
                             {% if article.author %}
-                                <a href="{{ path('authors', {'authorId': article.author.id }) }}">
+                                <a href="{{ path('author', {'authorId': article.author.id }) }}">
                                     {{ article.author.lastname }}
                                 </a>
                             {% else %}

@@ -16,8 +16,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Author
 {
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")

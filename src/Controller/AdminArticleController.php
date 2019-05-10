@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\Author;
 use App\Form\ArticleFormType;
 use App\Repository\ArticleRepository;
 use App\Repository\AuthorRepository;
@@ -134,5 +135,18 @@ class AdminArticleController extends AbstractController
         $this->em->flush();
 
         return $this->redirectToRoute('articles');
+    }
+
+
+    /**
+     * @Route("admin/article/author/{authorId}", name="author")
+     * @ParamConverter("author", options={"mapping": {"authorId": "id"}})
+     */
+    public function authorAction(Request $request, Author $author): Response
+    {
+        $request->attributes->get('author');
+        return $this->render('admin/article/author.html.twig', [
+            'author' => $author,
+        ]);
     }
 }
