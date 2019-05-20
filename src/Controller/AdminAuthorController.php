@@ -28,7 +28,7 @@ class AdminAuthorController extends AbstractController
     }
 
     /**
-     * @Route("admin/author/authors", name="authors")
+     * @Route("admin/author/authors", name="admin_authors")
      */
     public function authors()
     {

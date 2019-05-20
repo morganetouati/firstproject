@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -166,6 +165,7 @@ class Article
     public function setImgUploaded($imgUploaded)
     {
         $this->imgUploaded = $imgUploaded;
+
         return $this;
     }
 

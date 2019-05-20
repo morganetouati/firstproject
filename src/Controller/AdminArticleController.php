@@ -58,7 +58,7 @@ class AdminArticleController extends AbstractController
     }
 
     /**
-     * @Route("admin/article/articles{slug}", name="article")
+     * @Route("admin/article/articles/{slug}", name="article")
      */
     public function article(String $slug): Response
     {
@@ -137,7 +137,6 @@ class AdminArticleController extends AbstractController
         return $this->redirectToRoute('articles');
     }
 
-
     /**
      * @Route("admin/article/author/{authorId}", name="author")
      * @ParamConverter("author", options={"mapping": {"authorId": "id"}})
@@ -145,6 +144,7 @@ class AdminArticleController extends AbstractController
     public function authorAction(Request $request, Author $author): Response
     {
         $request->attributes->get('author');
+
         return $this->render('admin/article/author.html.twig', [
             'author' => $author,
         ]);
