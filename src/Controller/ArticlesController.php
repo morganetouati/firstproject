@@ -37,7 +37,6 @@ class ArticlesController extends AbstractController
     }
 
     /**
-//     * @Route("homepage", name="homepage")
      * @Route("all/", name="all_articles")
      */
     public function all_articles(Request $request): Response
