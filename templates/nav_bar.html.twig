@@ -1,8 +1,8 @@
 <nav class="navbar navbar-expand-md navbar-inverse bg-faded">
     <div class="collapse navbar-collapse" id="nav-content">
         <ul class="nav navbar-nav">
-            {% if app.request.get('_route') not in ['homepage', 'articles'] %}
-                <li><a href="{{ path("articles") }}">Home</a></li>
+            {% if is_granted('ROLE_USER') %}
+                <li><a href="{{ path("all_articles") }}">Home</a></li>
             {% endif %}
             {% if is_granted('ROLE_ADMIN') %}
                 <li class="dropdown">
