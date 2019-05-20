@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types = 1);
-
+declare(strict_types=1);
 
 namespace App\Controller;
 
@@ -9,7 +8,6 @@ use App\Entity\Article;
 use App\Entity\Author;
 use App\Repository\ArticleRepository;
 use App\Repository\AuthorRepository;
-use App\Service\ImgUploader;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,17 +37,17 @@ class ArticlesController extends AbstractController
     }
 
     /**
-     * @Route("homepage", name="homepage")
+//     * @Route("homepage", name="homepage")
      * @Route("all/", name="all_articles")
      */
-    public function articles(Request $request): Response
+    public function all_articles(Request $request): Response
     {
         $page = 1;
         if ($request->get('page')) {
             $page = $request->query->get('page');
         }
 
-        return $this->render('all_articles.html.twig', [
+        return $this->render('user/article/all_articles.html.twig', [
             'articles' => $this->articleRepository->getAllPosts($page, self::POST_LIMIT),
             'totalArticles' => $this->articleRepository->getPostCount(),
             'page' => $page,
@@ -67,7 +65,7 @@ class ArticlesController extends AbstractController
         if (!$article instanceof Article) {
             $this->addFlash('error', 'Unable to find article!');
 
-            return $this->redirectToRoute('articles');
+            return $this->redirectToRoute('all_articles');
         }
         if ($author) {
             $article = $this->articleRepository->findByAuthor('author');
@@ -91,5 +89,4 @@ class ArticlesController extends AbstractController
             'author' => $author,
         ]);
     }
-
 }

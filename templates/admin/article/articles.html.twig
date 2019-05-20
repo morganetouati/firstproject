@@ -30,10 +30,8 @@
                         {{ firstParagraph|raw }}<br/>
                         <a href="{{ path('article', {'slug': article.slug}) }}">Read More</a>
                     </div>
-                    {% if is_granted('ROLE_ADMIN') %}
-                            <a class="btn btn-danger" href="{{ path('delete-article', {'articleId': article.id}) }}">Delete</a>
-                            <a class="btn btn-warning" href="{{ path('edit-article', {'articleId': article.id}) }}">Update</a>
-                    {% endif %}
+                    <a class="btn btn-danger" href="{{ path('delete-article', {'articleId': article.id}) }}">Delete</a>
+                    <a class="btn btn-warning" href="{{ path('edit-article', {'articleId': article.id}) }}">Update</a>
                 {% else %}
                     <div class="alert alert-danger" role="alert">
                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>

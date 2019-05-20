@@ -6,4 +6,4 @@ admin_index:
 
 index:
     path: /
-    controller: 'App\Controller\AdminArticleController::articles'
+    controller: 'App\Controller\ArticlesController::all_articles'

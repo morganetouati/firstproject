@@ -49,7 +49,7 @@ class AdminAuthorController extends AbstractController
             $this->em->persist($author);
             $this->em->flush();
 
-            return $this->redirectToRoute('authors');
+            return $this->redirectToRoute('admin_authors');
         }
 
         return $this->render('admin/author/new.html.twig', [
@@ -67,7 +67,7 @@ class AdminAuthorController extends AbstractController
         $this->em->remove($author);
         $this->em->flush();
 
-        return $this->redirectToRoute('authors');
+        return $this->redirectToRoute('admin_authors');
     }
 
     /**
@@ -82,7 +82,7 @@ class AdminAuthorController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->flush();
 
-            return $this->redirectToRoute('authors');
+            return $this->redirectToRoute('admin_authors');
         }
 
         return $this->render(

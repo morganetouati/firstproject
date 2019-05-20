@@ -39,7 +39,7 @@ class AdminArticleController extends AbstractController
     }
 
     /**
-     * @Route("homepage", name="homepage")
+     //* @Route("homepage", name="homepage")
      * @Route("admin/article/articles", name="articles")
      */
     public function articles(Request $request): Response

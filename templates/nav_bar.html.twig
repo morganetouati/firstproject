@@ -2,7 +2,7 @@
     <div class="collapse navbar-collapse" id="nav-content">
         <ul class="nav navbar-nav">
             {% if app.request.get('_route') not in ['homepage', 'articles'] %}
-                <li><a href="{{ path("homepage") }}">Home</a></li>
+                <li><a href="{{ path("articles") }}">Home</a></li>
             {% endif %}
             {% if is_granted('ROLE_ADMIN') %}
                 <li class="dropdown">
@@ -21,7 +21,7 @@
                        aria-expanded="false">Author</a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{{ path("new-author") }}">Create author</a>
-                        <a class="dropdown-item" href="{{ path("authors") }}">List author</a>
+                        <a class="dropdown-item" href="{{ path("admin_authors") }}">List author</a>
                     </div>
                 </li>
             {% endif %}
