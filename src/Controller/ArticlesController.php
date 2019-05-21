@@ -80,9 +80,9 @@ class ArticlesController extends AbstractController
      * @Route("article/author/{authorId}", name="author")
      * @ParamConverter("author", options={"mapping": {"authorId": "id"}})
      */
-    public function authorAction(Request $request, Author $author): Response
+    public function authorAction(Author $author): Response
     {
-        $request->attributes->get('author');
+//        $request->attributes->get('author');
 
         return $this->render('user/article/author.html.twig', [
             'author' => $author,

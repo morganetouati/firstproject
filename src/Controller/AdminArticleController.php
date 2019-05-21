@@ -81,14 +81,19 @@ class AdminArticleController extends AbstractController
     }
 
     /**
+     * @param Request     $request
+     * @param ImgUploader $imgUploader
+     *
+     * @return Response
      * @Route("admin/article/new", name="new")
      */
     public function new(Request $request, ImgUploader $imgUploader): Response
     {
         $article = new Article();
         $form = $this->createForm(ArticleFormType::class, $article);
+        dump($form);
+        die('jfjf');
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             if (null !== $imgUploader) {
                 $article->setImgUploaded($imgUploader->upload($article->getImgUploaded()));
@@ -128,9 +133,9 @@ class AdminArticleController extends AbstractController
      * @Route("admin/article/{articleId}/delete/", name="delete-article")
      * @ParamConverter("article", options={"mapping": {"articleId": "id"}})
      */
-    public function delete(Article $article, Request $request): Response
+    public function delete(Article $article): Response
     {
-        $request->attributes->get('article');
+//        $request->attributes->get('article');
         $this->em->remove($article);
         $this->em->flush();
 

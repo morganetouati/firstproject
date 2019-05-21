@@ -61,9 +61,9 @@ class AdminAuthorController extends AbstractController
      * @Route("admin/author/{authorId}/delete/", name="delete-author")
      * @ParamConverter("author", options={"mapping": {"authorId": "id"}})
      */
-    public function delete(Author $author, Request $request): Response
+    public function delete(Author $author): Response
     {
-        $request->attributes->get('author');
+//        $request->attributes->get('author');
         $this->em->remove($author);
         $this->em->flush();
 
@@ -76,7 +76,7 @@ class AdminAuthorController extends AbstractController
      */
     public function update(Author $author, Request $request): Response
     {
-        $request->attributes->get('author');
+//        $request->attributes->get('author');
         $form = $this->createForm(AuthorFormType::class, $author);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

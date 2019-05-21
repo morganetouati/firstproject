@@ -28,7 +28,7 @@
             <th>Twitter</th>
             <th>GitHub</th>
             <th>Company</th>
-            <th>Delete</th>
+            <th colspan="2">Actions</th>
             </thead>
             {% for aut in authors %}
                 <tr>
@@ -47,7 +47,7 @@
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="5">No entries available</td>
+                    <td colspan="12">No entries available</td>
                 </tr>
             {% endfor %}
         </table>
