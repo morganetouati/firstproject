@@ -100,19 +100,12 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/", name="admin_index")
-     * @Route("/entries", name="admin_entries")
+     * @Route("/list_author", name="list_author")
      */
     public function entriesAction()
     {
-        $author = $this->authorRepository->findOneByUsername($this->getUser()->getUserName());
-        $blogPosts = [];
-        if ($author) {
-            $blogPosts = $this->blogPostRepository->findByAuthor('author');
-        }
-
-        return $this->render('admin/entries.html.twig', [
-            'blogPosts' => $blogPosts,
+        return $this->render('admin/list_author.twig', [
+            'author' => $this->authorRepository->getAllAuthor(),
         ]);
     }
 
@@ -121,7 +114,7 @@ class AdminController extends AbstractController
      *
      * @param $entryId
      *
-     * @return \Response
+     * @return /Response
      */
     public function deleteEntryAction($entryId, RegistryInterface $registry): Response
     {
