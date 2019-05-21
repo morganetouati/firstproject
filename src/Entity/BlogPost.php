@@ -79,8 +79,6 @@ class BlogPost
     private $imgUploaded;
 
     /**
-     * Get id.
-     *
      * @return int
      */
     public function getId()
@@ -89,8 +87,6 @@ class BlogPost
     }
 
     /**
-     * Set title.
-     *
      * @param string $title
      *
      * @return BlogPost
@@ -103,8 +99,6 @@ class BlogPost
     }
 
     /**
-     * Get title.
-     *
      * @return string
      */
     public function getTitle()
@@ -113,8 +107,6 @@ class BlogPost
     }
 
     /**
-     * Set slug.
-     *
      * @param string $slug
      *
      * @return BlogPost
@@ -127,8 +119,6 @@ class BlogPost
     }
 
     /**
-     * Get slug.
-     *
      * @return string
      */
     public function getSlug()
@@ -137,8 +127,6 @@ class BlogPost
     }
 
     /**
-     * Set description.
-     *
      * @param string $description
      *
      * @return BlogPost
@@ -151,8 +139,6 @@ class BlogPost
     }
 
     /**
-     * Get description.
-     *
      * @return string
      */
     public function getDescription()
@@ -161,8 +147,6 @@ class BlogPost
     }
 
     /**
-     * Set body.
-     *
      * @param string $body
      *
      * @return BlogPost
@@ -175,8 +159,6 @@ class BlogPost
     }
 
     /**
-     * Get body.
-     *
      * @return string
      */
     public function getBody()
@@ -185,8 +167,6 @@ class BlogPost
     }
 
     /**
-     * Set author.
-     *
      * @param Author $author
      *
      * @return BlogPost
@@ -199,8 +179,6 @@ class BlogPost
     }
 
     /**
-     * Get author.
-     *
      * @return Author
      */
     public function getAuthor()
@@ -209,8 +187,6 @@ class BlogPost
     }
 
     /**
-     * Set createdAt.
-     *
      * @param \DateTime $createdAt
      *
      * @return BlogPost
@@ -223,8 +199,6 @@ class BlogPost
     }
 
     /**
-     * Get createdAt.
-     *
      * @return \DateTime
      */
     public function getCreatedAt()
@@ -233,8 +207,6 @@ class BlogPost
     }
 
     /**
-     * Set updatedAt.
-     *
      * @param \DateTime $updatedAt
      *
      * @return BlogPost
@@ -247,8 +219,6 @@ class BlogPost
     }
 
     /**
-     * Get updatedAt.
-     *
      * @return \DateTime
      */
     public function getUpdatedAt()

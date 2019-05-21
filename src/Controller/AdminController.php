@@ -104,19 +104,9 @@ class AdminController extends AbstractController
      */
     public function entriesAction()
     {
-    /*    $author = $this->authorRepository->findOneByUsername($this->getUser()->getUserName());
-        $blogPosts = [];
-        if ($author) {
-            $blogPosts = $this->blogPostRepository->findByAuthor('author');
-        }
-
-        return $this->render('admin/entries.html.twig', [
-            'blogPosts' => $blogPosts,
-        ]);*/
-
-
         return $this->render('admin/list_author.twig', [
-            'author' => $this->authorRepository->getAllAuthor()]);
+            'author' => $this->authorRepository->getAllAuthor(),
+        ]);
     }
 
     /**
@@ -141,5 +131,10 @@ class AdminController extends AbstractController
         $this->addFlash('success', 'Entry was deleted!');
 
         return $this->redirectToRoute('admin_entries');
+    }
+
+    private function generateUniqueImgName()
+    {
+        return \md5(\uniqid('', true));
     }
 }

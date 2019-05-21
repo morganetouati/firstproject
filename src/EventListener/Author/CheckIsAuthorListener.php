@@ -35,12 +35,10 @@ class CheckIsAuthorListener
      */
     private $authorRepository;
 
-    public function __construct(
-        RouterInterface $router,
-        SessionInterface $session,
-        TokenStorageInterface $tokenStorage,
-        RegistryInterface $registry
-    ) {
+    public function __construct(RouterInterface $router, SessionInterface $session,
+                                TokenStorageInterface $tokenStorage,
+                                RegistryInterface $registry)
+    {
         $this->router = $router;
         $this->session = $session;
         $this->tokenStorage = $tokenStorage;
