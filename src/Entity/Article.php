@@ -15,6 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Article
 {
     /**
+     * @var int
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -22,36 +23,42 @@ class Article
     private $id;
 
     /**
+     * @var string
      * @Assert\NotBlank
      * @ORM\Column(name="title", type="string", length=255)
      */
     private $title;
 
     /**
+     * @var string
      * @Assert\NotBlank
      * @ORM\Column(name="slug", type="string", length=255, unique=true)
      */
     private $slug;
 
     /**
+     * @var string
      * @Assert\NotBlank
      * @ORM\Column(name="description", type="string", length=2000)
      */
     private $description;
 
     /**
+     * @var string
      * @Assert\NotBlank
      * @ORM\Column(name="body", type="text")
      */
     private $body;
 
     /**
+     * @var Author
      * @ORM\ManyToOne(targetEntity="Author", fetch="EAGER")
      * @ORM\JoinColumn(name="author_id", referencedColumnName="id")
      */
     private $author;
 
     /**
+     * @var \DateTime
      * @ORM\Column(name="created_at", type="datetimetz")
      */
     private $createdAt;
@@ -63,6 +70,7 @@ class Article
     private $updatedAt;
 
     /**
+     * @var string
      * @Assert\File(mimeTypes={"image/jpeg", "image/png"})
      * @ORM\Column(name="imgUploaded", type="string")
      */
@@ -80,7 +88,7 @@ class Article
         return $this;
     }
 
-    public function getTitle(): ?string
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -92,7 +100,7 @@ class Article
         return $this;
     }
 
-    public function getSlug(): ?string
+    public function getSlug(): string
     {
         return $this->slug;
     }
@@ -104,7 +112,7 @@ class Article
         return $this;
     }
 
-    public function getDescription(): ?string
+    public function getDescription(): string
     {
         return $this->description;
     }
@@ -116,19 +124,19 @@ class Article
         return $this;
     }
 
-    public function getBody(): ?string
+    public function getBody(): string
     {
         return $this->body;
     }
 
-    public function setAuthor(Author $author)
+    public function setAuthor(Author $author): self
     {
         $this->author = $author;
 
         return $this;
     }
 
-    public function getAuthor()
+    public function getAuthor(): Author
     {
         return $this->author;
     }
@@ -140,29 +148,29 @@ class Article
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): \DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function getUpdatedAt(): \DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    public function getImgUploaded()
+    public function getImgUploaded(): string
     {
         return $this->imgUploaded;
     }
 
-    public function setImgUploaded($imgUploaded)
+    public function setImgUploaded($imgUploaded): self
     {
         $this->imgUploaded = $imgUploaded;
 
