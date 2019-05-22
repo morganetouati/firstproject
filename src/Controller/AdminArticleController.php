@@ -40,6 +40,10 @@ class AdminArticleController extends AbstractController
 
     /**
      * @Route("admin/article/articles", name="articles")
+     *
+     * @param Request $request
+     *
+     * @return Response
      */
     public function articles(Request $request): Response
     {
@@ -91,8 +95,6 @@ class AdminArticleController extends AbstractController
     {
         $article = new Article();
         $form = $this->createForm(ArticleFormType::class, $article);
-        dump($form);
-        die('jfjf');
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             if (null !== $imgUploader) {
@@ -112,6 +114,12 @@ class AdminArticleController extends AbstractController
     /**
      * @Route("admin/article/{articleId}/edit/", name="edit-article")
      * @ParamConverter("article", options={"mapping": {"articleId": "id"}})
+     *
+     * @param Article     $article
+     * @param Request     $request
+     * @param ImgUploader $imgUploader
+     *
+     * @return Response
      */
     public function edit(Article $article, Request $request, ImgUploader $imgUploader): Response
     {
@@ -132,10 +140,13 @@ class AdminArticleController extends AbstractController
     /**
      * @Route("admin/article/{articleId}/delete/", name="delete-article")
      * @ParamConverter("article", options={"mapping": {"articleId": "id"}})
+     *
+     * @param Article $article
+     *
+     * @return Response
      */
     public function delete(Article $article): Response
     {
-//        $request->attributes->get('article');
         $this->em->remove($article);
         $this->em->flush();
 
@@ -145,6 +156,10 @@ class AdminArticleController extends AbstractController
     /**
      * @Route("admin/article/author/{authorId}", name="author")
      * @ParamConverter("author", options={"mapping": {"authorId": "id"}})
+     *
+     * @param Author $author
+     *
+     * @return Response
      */
     public function authorAction(Author $author): Response
     {

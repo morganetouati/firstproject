@@ -33,7 +33,7 @@ class RegistrationController extends AbstractController
 
             return $this->redirectToRoute('login');
         }
-        //En cas d'erreur on reste sur le formulaire
+
         return $this->render(
             'registration/register.html.twig',
             ['form' => $form->createView()]

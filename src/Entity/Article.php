@@ -24,31 +24,27 @@ class Article
     private $id;
     /**
      * @var string
-     * @Assert\NotBlank
      * @ORM\Column(name="title", type="string", length=255)
      */
-    private $title;
+    private $title = '';
     /**
      * @var string
-     * @Assert\NotBlank
      * @ORM\Column(name="slug", type="string", length=255, unique=true)
      */
-    private $slug;
+    private $slug = '';
     /**
      * @var string
-     * @Assert\NotBlank
      * @ORM\Column(name="description", type="string", length=2000)
      */
-    private $description;
+    private $description = '';
     /**
      * @var string
-     * @Assert\NotBlank
      * @ORM\Column(name="body", type="text")
      */
-    private $body;
+    private $body = '';
     /**
-     * @var Author
-     * @ORM\ManyToOne(targetEntity="Author", fetch="EAGER")
+     * @var Author|null
+     * @ORM\ManyToOne(targetEntity="Author")
      * @ORM\JoinColumn(name="author_id", referencedColumnName="id")
      */
     private $author;
@@ -69,67 +65,42 @@ class Article
      */
     private $imgUploaded;
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-
-    /**
-     * @param string $title
-     * @return Article
-     */
-    public function setTitle(string $title): Article
+    public function setTitle(string $title): self
     {
         $this->title = $title;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @param string $slug
-     * @return Article
-     */
-    public function setSlug(string $slug): Article
+    public function setSlug(string $slug): self
     {
         $this->slug = $slug;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getSlug(): string
     {
         return $this->slug;
     }
 
-    /**
-     * @param string $description
-     * @return Article
-     */
-    public function setDescription(string $description): Article
+    public function setDescription(string $description): self
     {
         $this->description = $description;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getDescription(): string
     {
         return $this->description;
@@ -142,88 +113,57 @@ class Article
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getBody(): string
     {
         return $this->body;
     }
 
-    /**
-     * @param Author $author
-     * @return Article
-     */
-    public function setAuthor(Author $author): Article
+    public function setAuthor(Author $author): self
     {
         $this->author = $author;
 
         return $this;
     }
 
-    /**
-     * @return Author
-     */
-    public function getAuthor(): Author
+    public function getAuthor(): ?Author
     {
         return $this->author;
     }
 
-    /**
-     * @param \DateTimeInterface $createdAt
-     * @return Article
-     */
-    public function setCreatedAt(\DateTimeInterface $createdAt): Article
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    /**
-     * @return \DateTimeInterface
-     */
     public function getCreatedAt(): \DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    /**
-     * @param \DateTimeInterface $updatedAt
-     * @return Article
-     */
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): Article
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
-    /**
-     * @return \DateTimeInterface
-     */
     public function getUpdatedAt(): \DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    /**
-     * @return string
-     */
-    public function getImgUploaded(): string
-    {
-        return $this->imgUploaded;
-    }
-
-    /**
-     * @param UploadedFile $imgUploaded
-     * @return Article
-     */
-    public function setImgUploaded(UploadedFile $imgUploaded): Article
+    public function setImgUploaded($imgUploaded): self
     {
         $this->imgUploaded = $imgUploaded;
 
         return $this;
+    }
+
+    public function getImgUploaded()
+    {
+        return $this->imgUploaded;
     }
 
     /**
@@ -231,12 +171,8 @@ class Article
      */
     public function prePersist(): void
     {
-        if (!$this->getCreatedAt()) {
-            $this->setCreatedAt(new \DateTime());
-        }
-        if (!$this->getUpdatedAt()) {
-            $this->setUpdatedAt(new \DateTime());
-        }
+        $this->setCreatedAt(new \DateTime());
+        $this->setUpdatedAt(new \DateTime());
     }
 
     /**

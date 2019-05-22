@@ -82,8 +82,6 @@ class ArticlesController extends AbstractController
      */
     public function authorAction(Author $author): Response
     {
-//        $request->attributes->get('author');
-
         return $this->render('user/article/author.html.twig', [
             'author' => $author,
         ]);

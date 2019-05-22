@@ -128,7 +128,7 @@ class Author
      *
      * @return Author
      */
-    public function setTitle($title)
+    public function setTitle($title): self
     {
         $this->title = $title;
 
@@ -140,7 +140,7 @@ class Author
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
