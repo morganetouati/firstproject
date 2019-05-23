@@ -63,7 +63,6 @@ class AdminAuthorController extends AbstractController
      */
     public function delete(Author $author): Response
     {
-//        $request->attributes->get('author');
         $this->em->remove($author);
         $this->em->flush();
 
@@ -76,7 +75,6 @@ class AdminAuthorController extends AbstractController
      */
     public function update(Author $author, Request $request): Response
     {
-//        $request->attributes->get('author');
         $form = $this->createForm(AuthorFormType::class, $author);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
