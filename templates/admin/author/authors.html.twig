@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="blog-header">
+            <h1 class="blog-title">List authors</h1>
+        </div>
+
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }}" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+        <table class="table table-striped">
+            <thead>
+            <th>Lastname</th>
+            <th>Title</th>
+            <th>Firstname</th>
+            <th>Email</th>
+            <th>Bio</th>
+            <th>phone</th>
+            <th>Facebook</th>
+            <th>Twitter</th>
+            <th>GitHub</th>
+            <th>Company</th>
+            <th colspan="2">Actions</th>
+            </thead>
+            {% for aut in authors %}
+                <tr>
+                    <td>{{ aut.lastname }}</td>
+                    <td>{{ aut.title }}</td>
+                    <td>{{ aut.firstname}}</td>
+                    <td>{{ aut.email }}</td>
+                    <td><textarea rows="3" cols="20">{{ aut.shortBio }}</textarea></td>
+                    <td>{{ aut.phone }}</td>
+                    <td>{{ aut.facebook}}</td>
+                    <td>{{ aut.twitter}}</td>
+                    <td>{{ aut.github}}author</td>
+                    <td>{{ aut.company}}</td>
+                    <td><a class="btn btn-danger" href="{{ path('delete-author', {'authorId': aut.id}) }}">Delete</a></td>
+                    <td><a class="btn btn-warning" href="{{ path('edit-author', {'authorId': aut.id}) }}">Update</a></td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="12">No entries available</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

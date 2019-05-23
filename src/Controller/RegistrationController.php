@@ -16,7 +16,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class RegistrationController extends AbstractController
 {
     /**
-     * @Route("/registration", name="register")
+     * @Route("/register", name="register")
      */
     public function register(Request $request, RegistryInterface $registry, UserPasswordEncoderInterface $passwordEncoder): Response
     {
@@ -33,7 +33,7 @@ class RegistrationController extends AbstractController
 
             return $this->redirectToRoute('login');
         }
-        //En cas d'erreur on reste sur le formulaire
+
         return $this->render(
             'registration/register.html.twig',
             ['form' => $form->createView()]

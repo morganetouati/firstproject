@@ -19,7 +19,8 @@ class AuthorRepository
         $this->entityManager = $entityManager;
     }
 
-    public function getAllAuthor(){
+    public function getAllAuthor()
+    {
         return $this->entityManager->createQueryBuilder()
             ->select('author')
             ->from(Author::class, 'author')
@@ -27,14 +28,18 @@ class AuthorRepository
             ->getResult();
     }
 
-  public function findOneByUsername(string $username ): ?Author
-  {
-      return $result = $this->entityManager->createQueryBuilder()
-          ->select('author')
-          ->from(Author::class, 'author')
-          ->where('author.username = :username')
-          ->setParameter('author', $username)
-          ->getQuery()
-          ->getOneOrNullResult();
-  }
+    public function findOneById($authorId)
+    {
+        return $this->entityManager->getRepository(Author::class)->find($authorId);
+    }
+
+    public function findOneByLastname($lastname)
+    {
+        return $this->entityManager->getRepository(Author::class)->find($lastname);
+    }
+
+    public function findOneByEmail($email)
+    {
+        return $this->entityManager->getRepository(Author::class)->find($email);
+    }
 }

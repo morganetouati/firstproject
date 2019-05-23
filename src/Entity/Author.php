@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use App\Repository\AuthorRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -12,13 +11,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Author.
  *
  * @ORM\Table(name="author")
- * @ORM\Entity(repositoryClass=AuthorRepository::class)
+ * @ORM\Entity
  */
 class Author
 {
     /**
      * @var int
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -27,288 +25,189 @@ class Author
 
     /**
      * @var string
-     * @Assert\NotBlank
-     * @ORM\Column(name="name", type="string", length=255, unique=true)
+     * @ORM\Column(name="lastname", type="string", length=255, unique=true)
      */
-    private $name;
+    private $lastname = '';
 
     /**
      * @var string
-     * @Assert\NotBlank
      * @ORM\Column(name="title", type="string", length=255)
      */
-    private $title;
+    private $title = '';
 
     /**
      * @var string
-     * @Assert\NotBlank
-     * @ORM\Column(name="username", type="string", length=255, unique=true)
+     * @ORM\Column(name="firstname", type="string", length=255, unique=true)
      */
-    private $username;
+    private $firstname = '';
 
     /**
      * @var string
-     * @Assert\NotBlank
-     * @ORM\Column(name="company", type="string", length=255)
-     */
-    private $company;
-
-    /**
-     * @var string
-     * @Assert\NotBlank
      * @ORM\Column(name="short_bio", type="string", length=500)
      */
-    private $shortBio;
+    private $shortBio = '';
 
     /**
      * @var string
-     * @Assert\NotBlank
      * @Assert\Length(min=10, max=20, minMessage="min_length", maxMessage="max_length")
-     * @Assert\Regex(pattern="/^\(0\)[0-9]*$")
+     * @Assert\Regex(pattern="/^(0|\+33)[1-9]([-. ]?[0-9]{2}){4}$/")
      * @ORM\Column(name="phone", type="string", length=10, nullable=true)
      */
-    private $phone;
+    private $phone = '';
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=60, unique=true)
+     * @Assert\Length(max=60)
+     * @Assert\Email
+     */
+    private $email = '';
+
+    /**
+     * @var string
+     * @ORM\Column(name="company", type="string", length=255)
+     */
+    private $company = '';
 
     /**
      * @var string
      * @ORM\Column(name="facebook", type="string", length=255, nullable=true)
      */
-    private $facebook;
+    private $facebook = '';
 
     /**
      * @var string
      * @ORM\Column(name="twitter", type="string", length=255, nullable=true)
      */
-    private $twitter;
+    private $twitter = '';
 
     /**
      * @var string
      * @ORM\Column(name="github", type="string", length=255, nullable=true)
      */
-    private $github;
+    private $github = '';
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return Author
-     */
-    public function setName($name)
+    public function setLastName(string $lastname): self
     {
-        $this->name = $name;
+        $this->lastname = $lastname;
 
         return $this;
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName()
+    public function getLastName(): string
     {
-        return $this->name;
+        return $this->lastname;
     }
 
-    /**
-     * Set title.
-     *
-     * @param string $title
-     *
-     * @return Author
-     */
-    public function setTitle($title)
+    public function setTitle(string $title): self
     {
         $this->title = $title;
 
         return $this;
     }
 
-    /**
-     * Get title.
-     *
-     * @return string
-     */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * Set username.
-     *
-     * @param string $username
-     *
-     * @return Author
-     */
-    public function setUsername($username)
+    public function setFirstname(string $firstname): self
     {
-        $this->username = $username;
+        $this->firstname = $firstname;
 
         return $this;
     }
 
-    /**
-     * Get username.
-     *
-     * @return string
-     */
-    public function getUsername()
+    public function getFirstname(): string
     {
-        return $this->username;
+        return $this->firstname;
     }
 
-    /**
-     * Set company.
-     *
-     * @param string $company
-     *
-     * @return Author
-     */
-    public function setCompany($company)
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    public function setCompany(string $company): self
     {
         $this->company = $company;
 
         return $this;
     }
 
-    /**
-     * Get company.
-     *
-     * @return string
-     */
-    public function getCompany()
+    public function getCompany(): string
     {
         return $this->company;
     }
 
-    /**
-     * Set shortBio.
-     *
-     * @param string $shortBio
-     *
-     * @return Author
-     */
-    public function setShortBio($shortBio)
+    public function setShortBio(string $shortBio): self
     {
         $this->shortBio = $shortBio;
 
         return $this;
     }
 
-    /**
-     * Get shortBio.
-     *
-     * @return string
-     */
-    public function getShortBio()
+    public function getShortBio(): string
     {
         return $this->shortBio;
     }
 
-    /**
-     * Set phone.
-     *
-     * @param string $phone
-     *
-     * @return Author
-     */
-    public function setPhone($phone)
+    public function setPhone(string $phone): self
     {
         $this->phone = $phone;
 
         return $this;
     }
 
-    /**
-     * Get phone.
-     *
-     * @return string
-     */
-    public function getPhone()
+    public function getPhone(): string
     {
         return $this->phone;
     }
 
-    /**
-     * Set facebook.
-     *
-     * @param string $facebook
-     *
-     * @return Author
-     */
-    public function setFacebook($facebook)
+    public function setFacebook(string $facebook): self
     {
         $this->facebook = $facebook;
 
         return $this;
     }
 
-    /**
-     * Get facebook.
-     *
-     * @return string
-     */
-    public function getFacebook()
+    public function getFacebook(): string
     {
         return $this->facebook;
     }
 
-    /**
-     * Set twitter.
-     *
-     * @param string $twitter
-     *
-     * @return Author
-     */
-    public function setTwitter($twitter)
+    public function setTwitter(string $twitter): self
     {
         $this->twitter = $twitter;
 
         return $this;
     }
 
-    /**
-     * Get twitter.
-     *
-     * @return string
-     */
-    public function getTwitter()
+    public function getTwitter(): string
     {
         return $this->twitter;
     }
 
-    /**
-     * Set github.
-     *
-     * @param string $github
-     *
-     * @return Author
-     */
-    public function setGithub($github)
+    public function setGithub(string $github): self
     {
         $this->github = $github;
 
         return $this;
     }
 
-    /**
-     * Get github.
-     *
-     * @return string
-     */
-    public function getGithub()
+    public function getGithub(): string
     {
         return $this->github;
     }

@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+{% block header %}
+    {% block title %}Article{% endblock %}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="blog-header">
+            <h1 class="blog-title">Blog</h1>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-8 blog-main">
+                <div class="blog-post">
+                    <h2 class="blog-post-title">{{ article.title }}</h2>
+                    <p class="blog-post-meta">
+                        {{ article.updatedAt|date('F j, Y') }} by
+                        {% if article.author == null %}
+                            Author Unknow
+                        {% else %}
+                            <a href="{{ path('author', {'authorId': article.author.id}) }}">
+                                {{ article.author.lastname }}
+                            </a>
+                        {% endif %}
+                    </p>
+                    <h3>Description:</h3>
+                    <p>{{ article.description|raw }}</p>
+
+                    <h3>Body:</h3>
+                    <p>{{ article.body|raw }}</p>
+                    <img src="{{ asset('uploads/img/' ~ article.imgUploaded) }}" alt="{{ article.imgUploaded }}" height="800" width="900">
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

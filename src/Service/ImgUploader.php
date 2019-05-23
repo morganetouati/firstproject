@@ -19,10 +19,12 @@ class ImgUploader
         $this->targetDirectory = $targetDirectory;
     }
 
+    /**
+     * @param UploadedFile $img
+     */
     public function upload(UploadedFile $img)
     {
         $imgName = \md5(\uniqid('', true)) . '.' . $img->guessExtension();
-
         try {
             $img->move($this->getTargetDirectory(), $imgName);
         } catch (FileException $e) {

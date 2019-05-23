@@ -6,6 +6,7 @@ namespace App\Form;
 
 use App\Entity\Author;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -14,14 +15,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AuthorFormType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add(
-                'name',
+                'lastname',
                 TextType::class,
                 [
                     'attr' => ['class' => 'form-control'],
@@ -34,6 +32,19 @@ class AuthorFormType extends AbstractType
                     'attr' => ['class' => 'form-control'],
                 ]
             )
+            ->add(
+                'firstname',
+                TextType::class, [
+                    'attr' => ['class' => 'form-control'],
+                ]
+            )
+            ->add(
+                'email',
+                EmailType::class, [
+                    'attr' => ['class' => 'form-control'],
+                ]
+            )
+
             ->add(
                 'company',
                 TextType::class,
@@ -85,14 +96,11 @@ class AuthorFormType extends AbstractType
                 SubmitType::class,
                 [
                     'attr' => ['class' => 'form-control btn-primary pull-right'],
-                    'label' => 'Become an author!',
+                    'label' => 'Submit!',
                 ]
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -100,9 +108,6 @@ class AuthorFormType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName()
     {
         return 'author_form';

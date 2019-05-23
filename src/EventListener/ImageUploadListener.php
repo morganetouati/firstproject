@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\EventListener;
 
-use App\Entity\BlogPost;
+use App\Entity\Article;
 use App\Service\ImgUploader;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
@@ -34,7 +34,7 @@ class ImageUploadListener
 
     private function uploadFile($entity): void
     {
-        if (!$entity instanceof BlogPost) {
+        if (!$entity instanceof Article) {
             return;
         }
         $img = $entity->getImgUploaded();
@@ -50,7 +50,7 @@ class ImageUploadListener
     public function postLoad(LifecycleEventArgs $args): void
     {
         $entity = $args->getEntity();
-        if (!$entity instanceof BlogPost) {
+        if (!$entity instanceof Article) {
             return;
         }
 

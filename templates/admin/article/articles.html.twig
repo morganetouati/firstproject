@@ -4,51 +4,52 @@
         <div class="blog-header">
             <h1 class="blog-title">Blog tutorial</h1>
         </div>
-
         <div class="row">
             <div class="col-sm-8 blog-main">
-                {% for blogPost in blogPosts %}
-                    {% set paragraphs = blogPost.description|split('</p>') %}
+
+                {% for article in articles %}
+                    {% set paragraphs = article.description|split('</p>') %}
                     {% set firstParagraph = paragraphs|first ~ '</p>' %}
                     <div class="blog-post">
                         <h2 class="blog-post-title">
-                            <a href="{{ path('entry', {'slug': blogPost.slug}) }}">
-                                {{ blogPost.title }}
+                            <a href="{{ path('article', {'slug': article.slug}) }}">
+                                {{ article.title }}
                             </a>
                         </h2>
                         <p class="blog-post-meta">
-                            {{ blogPost.getUpdatedAt|date('F j, Y') }} by
-
-                            {% if blogPost.author %}
-                                <a href="{{ path('author', {'name': blogPost.author.username|url_encode }) }}">
-                                    {{ blogPost.author.name }}
+                            {{ article.getUpdatedAt|date('F j, Y') }} by
+                            {% if article.author %}
+                                <a href="{{ path('author', {'authorId': article.author.id }) }}">
+                                    {{ article.author.lastname }}
                                 </a>
                             {% else %}
                                 Unknown Author
                             {% endif %}
                         </p>
                         {{ firstParagraph|raw }}<br/>
-                        <a href="{{ path('entry', {'slug': blogPost.slug}) }}">Read More</a>
+                        <a href="{{ path('article', {'slug': article.slug}) }}">Read More</a>
                     </div>
+                    <a class="btn btn-danger" href="{{ path('delete-article', {'articleId': article.id}) }}">Delete</a>
+                    <a class="btn btn-warning" href="{{ path('edit-article', {'articleId': article.id}) }}">Update</a>
                 {% else %}
                     <div class="alert alert-danger" role="alert">
                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                         <span class="sr-only">Error:</span>
-                        You have no blog articles. Please log in and create an article.
+                        There is no more articles.
                     </div>
                 {% endfor %}
 
                 {% set canPrevious = page > 1 %}
-                {% set canNext = (page * entryLimit) < totalBlogPosts %}
+                {% set canNext = (page * articleLimit) < totalArticles %}
                 <nav>
                     <ul class="pager">
                         <li class="previous {% if canPrevious == false %}disabled{% endif %}">
-                            <a href="{% if canPrevious %}{{ path('entries', {'page': page - 1}) }}{% endif %}">
+                            <a href="{% if canPrevious %}{{ path('articles', {'page': page - 1}) }}{% endif %}">
                                 <span aria-hidden="true">&larr;</span> Older
                             </a>
                         </li>
                         <li class="next {% if canNext == false %}disabled{% endif %}">
-                            <a href="{% if canNext %}{{ path('entries', {'page': page + 1}) }}{% endif %}">
+                            <a href="{% if canNext %}{{ path('articles', {'page': page + 1}) }}{% endif %}">
                                 Newer <span aria-hidden="true">&rarr;</span>
                             </a>
                         </li>

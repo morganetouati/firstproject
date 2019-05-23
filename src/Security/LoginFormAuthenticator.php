@@ -46,7 +46,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         $credentials = [
             'username' => $request->request->get('username'),
             'password' => $request->request->get('password'),
-            'csrf_token' => $request->request->get('_csrf_token'),
+            'csrfToken' => $request->request->get('csrfToken'),
         ];
         $request->getSession()->set(
             Security::LAST_USERNAME,
@@ -58,9 +58,9 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        $csrf_token = new CsrfToken('authenticate', $credentials['csrf_token']);
+        $csrfToken = new CsrfToken('authenticate', $credentials['csrfToken']);
 
-        if (!$this->csrfTokenManager->isTokenValid($csrf_token)) {
+        if (!$this->csrfTokenManager->isTokenValid($csrfToken)) {
             throw new InvalidCsrfTokenException();
         }
 
@@ -84,7 +84,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
-            return new RedirectResponse($this->urlGenerator->generate('entries'));
+            return new RedirectResponse($this->urlGenerator->generate('articles'));
         }
 
         // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));

@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,19 +26,20 @@ class UserFormType extends AbstractType
                 'first_options' => ['label' => 'Password'],
                 'second_options' => ['label' => 'Repeat Password'],
             ])
-        ->add('csrf_token', HiddenType::class);
+            ->add('csrfToken', HiddenType::class)
+            ->add('create', SubmitType::class,
+                ['label' => 'Create',
+                    'attr' => ['class' => 'form-control btn-primary pull-right'],
+                ]
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => User::class,
-            // enable/disable CSRF protection for this form
             'csrf_protection' => true,
-            // the name of the hidden HTML field that stores the token
-            'csrf_field_name' => 'csrf_token',
-            // an arbitrary string used to generate the value of the token
-            // using a different string for each form improves its security
+            'csrf_field_name' => 'csrfToken',
             'csrf_token_id' => 'task_token',
         ]);
     }
