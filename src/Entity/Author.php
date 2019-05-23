@@ -43,14 +43,12 @@ class Author
 
     /**
      * @var string
-     * @Assert\NotBlank
      * @ORM\Column(name="short_bio", type="string", length=500)
      */
     private $shortBio = '';
 
     /**
      * @var string
-     * @Assert\NotBlank
      * @Assert\Length(min=10, max=20, minMessage="min_length", maxMessage="max_length")
      * @Assert\Regex(pattern="/^(0|\+33)[1-9]([-. ]?[0-9]{2}){4}$/")
      * @ORM\Column(name="phone", type="string", length=10, nullable=true)
@@ -58,8 +56,8 @@ class Author
     private $phone = '';
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=60, unique=true)
-     * @Assert\NotBlank
      * @Assert\Length(max=60)
      * @Assert\Email
      */
@@ -67,7 +65,6 @@ class Author
 
     /**
      * @var string
-     * @Assert\NotBlank
      * @ORM\Column(name="company", type="string", length=255)
      */
     private $company = '';
@@ -134,6 +131,8 @@ class Author
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
     }
 
     public function getEmail(): string
