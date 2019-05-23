@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -18,6 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class User implements UserInterface
 {
     /**
+     * @var int
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -25,26 +27,30 @@ class User implements UserInterface
     private $id;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=25, unique=true)
      * @Assert\NotBlank
      * @Assert\Length(max=25)
      */
-    private $username;
+    private $username = '';
 
     /**
+     * @var string
      * @ORM\Column(type="string")
      */
-    private $password;
+    private $password = '';
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=60, unique=true)
      * @Assert\NotBlank
      * @Assert\Length(max=60)
      * @Assert\Email
      */
-    private $email;
+    private $email = '';
 
     /**
+     * @var bool
      * @ORM\Column(name="active", type="boolean")
      */
     private $active;
@@ -56,10 +62,11 @@ class User implements UserInterface
     private $roles;
 
     /**
+     * @var string
      * @Assert\NotBlank(groups={"registration"})
      * @Assert\Length(max=4096)
      */
-    private $plainPassword;
+    private $plainPassword = '';
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -73,7 +80,7 @@ class User implements UserInterface
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $csrf_token;
+    private $csrfToken;
 
     public function __construct()
     {
@@ -81,63 +88,57 @@ class User implements UserInterface
         $this->roles = ['ROLE_USER'];
     }
 
-    /*
-     * Get id
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    public function setUsername($username)
+    public function setUsername(string $username): self
     {
         $this->username = $username;
 
         return $this;
     }
 
-    public function getPassword()
+    public function getUsername(): string
     {
-        return $this->password;
+        return $this->username;
     }
 
-    public function setPassword($password)
+    public function setPassword(string $password): self
     {
         $this->password = $password;
 
         return $this;
     }
 
-    /**
-     * Get email.
-     */
-    public function getEmail()
+    public function getPassword(): string
     {
-        return $this->email;
+        return $this->password;
     }
 
-    public function setEmail($email)
+    public function setEmail(string $email): self
     {
         $this->email = $email;
 
         return $this;
     }
 
-    public function isActive()
+    public function getEmail(): string
     {
-        return $this->active;
+        return $this->email;
     }
 
-    public function setActive($active)
+    public function setActive(int $active): self
     {
         $this->active = $active;
 
         return $this;
+    }
+
+    public function isActive(): bool
+    {
+        return $this->active;
     }
 
     public function getSalt()
@@ -152,12 +153,12 @@ class User implements UserInterface
     {
     }
 
-    public function getRoles()
+    public function getRoles(): array
     {
         return $this->roles;
     }
 
-    public function setRoles(array $roles)
+    public function setRoles(array $roles): self
     {
         if (!\in_array('ROLE_USER', $roles, true)) {
             $roles[] = 'ROLE_USER';
@@ -172,47 +173,35 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getPlainPassword()
+    public function getPlainPassword(): string
     {
         return $this->plainPassword;
     }
 
-    public function setPlainPassword($password): void
+    public function setPlainPassword(string $password): void
     {
         $this->plainPassword = $password;
     }
 
-    /*
-   * Get passwordRequestedAt
-   */
-    public function getPasswordRequestedAt()
+    public function getPasswordRequestedAt(): \DateTime
     {
         return $this->passwordRequestedAt;
     }
 
-    /*
-     * Set passwordRequestedAt
-     */
-    public function setPasswordRequestedAt($passwordRequestedAt)
+    public function setPasswordRequestedAt($passwordRequestedAt): self
     {
         $this->passwordRequestedAt = $passwordRequestedAt;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getCsrfToken(): ?string
     {
-        return $this->csrf_token;
+        return $this->csrfToken;
     }
 
-    /**
-     * @param string $csrf_token
-     */
-    public function setCsrfToken(string $csrf_token): void
+    public function setCsrfToken(string $csrfToken): void
     {
-        $this->csrf_token = $csrf_token;
+        $this->csrfToken = $csrfToken;
     }
 }

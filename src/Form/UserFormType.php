@@ -26,7 +26,7 @@ class UserFormType extends AbstractType
                 'first_options' => ['label' => 'Password'],
                 'second_options' => ['label' => 'Repeat Password'],
             ])
-            ->add('csrf_token', HiddenType::class)
+            ->add('csrfToken', HiddenType::class)
             ->add('create', SubmitType::class,
                 ['label' => 'Create',
                     'attr' => ['class' => 'form-control btn-primary pull-right'],
@@ -39,7 +39,7 @@ class UserFormType extends AbstractType
         $resolver->setDefaults([
             'data_class' => User::class,
             'csrf_protection' => true,
-            'csrf_field_name' => 'csrf_token',
+            'csrf_field_name' => 'csrfToken',
             'csrf_token_id' => 'task_token',
         ]);
     }
