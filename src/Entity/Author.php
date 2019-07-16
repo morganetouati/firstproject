@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use App\Repository\AuthorRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -12,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Author.
  *
  * @ORM\Table(name="author")
- * @ORM\Entity(repositoryClass=AuthorRepository::class)
+ * @ORM\Entity
  */
 class Author
 {
@@ -28,9 +27,9 @@ class Author
     /**
      * @var string
      * @Assert\NotBlank
-     * @ORM\Column(name="name", type="string", length=255, unique=true)
+     * @ORM\Column(name="lastname", type="string", length=255, unique=true)
      */
-    private $name;
+    private $lastname;
 
     /**
      * @var string
@@ -42,16 +41,9 @@ class Author
     /**
      * @var string
      * @Assert\NotBlank
-     * @ORM\Column(name="username", type="string", length=255, unique=true)
+     * @ORM\Column(name="firstname", type="string", length=255, unique=true)
      */
-    private $username;
-
-    /**
-     * @var string
-     * @Assert\NotBlank
-     * @ORM\Column(name="company", type="string", length=255)
-     */
-    private $company;
+    private $firstname;
 
     /**
      * @var string
@@ -64,10 +56,25 @@ class Author
      * @var string
      * @Assert\NotBlank
      * @Assert\Length(min=10, max=20, minMessage="min_length", maxMessage="max_length")
-     * @Assert\Regex(pattern="/^\(0\)[0-9]*$")
+     * @Assert\Regex(pattern="/^(0|\+33)[1-9]([-. ]?[0-9]{2}){4}$/")
      * @ORM\Column(name="phone", type="string", length=10, nullable=true)
      */
     private $phone;
+
+    /**
+     * @ORM\Column(type="string", length=60, unique=true)
+     * @Assert\NotBlank
+     * @Assert\Length(max=60)
+     * @Assert\Email
+     */
+    private $email;
+
+    /**
+     * @var string
+     * @Assert\NotBlank
+     * @ORM\Column(name="company", type="string", length=255)
+     */
+    private $company;
 
     /**
      * @var string
@@ -98,27 +105,22 @@ class Author
     }
 
     /**
-     * Set name.
+     * Set lastname.
      *
-     * @param string $name
+     * @param string $lastname
      *
      * @return Author
      */
-    public function setName($name)
+    public function setLastName($lastname)
     {
-        $this->name = $name;
+        $this->lastname = $lastname;
 
         return $this;
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName()
+    public function getLastName()
     {
-        return $this->name;
+        return $this->lastname;
     }
 
     /**
@@ -146,27 +148,49 @@ class Author
     }
 
     /**
-     * Set username.
+     * Get firstname.
      *
-     * @param string $username
+     * @return string
+     */
+    public function getFirstname()
+    {
+        return $this->firstname;
+    }
+
+    /**
+     * Set $firstname.
+     *
+     * @param string $firstname
      *
      * @return Author
      */
-    public function setUsername($username)
+    public function setFirstname($firstname)
     {
-        $this->username = $username;
+        $this->firstname = $firstname;
 
         return $this;
     }
 
     /**
-     * Get username.
+     * Get email.
      *
      * @return string
      */
-    public function getUsername()
+    public function getEmail()
     {
-        return $this->username;
+        return $this->email;
+    }
+
+    /**
+     * Set email.
+     *
+     * @param string $email
+     *
+     * @return Author
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
     }
 
     /**

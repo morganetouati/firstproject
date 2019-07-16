@@ -6,6 +6,7 @@ namespace App\Form;
 
 use App\Entity\Author;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -21,7 +22,7 @@ class AuthorFormType extends AbstractType
     {
         $builder
             ->add(
-                'name',
+                'lastname',
                 TextType::class,
                 [
                     'attr' => ['class' => 'form-control'],
@@ -34,6 +35,19 @@ class AuthorFormType extends AbstractType
                     'attr' => ['class' => 'form-control'],
                 ]
             )
+            ->add(
+                'firstname',
+                TextType::class, [
+                    'attr' => ['class' => 'form-control'],
+                ]
+            )
+            ->add(
+                'email',
+                EmailType::class, [
+                    'attr' => ['class' => 'form-control'],
+                ]
+            )
+
             ->add(
                 'company',
                 TextType::class,
